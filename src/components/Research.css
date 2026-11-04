@@ -1,5 +1,6 @@
 .research-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   margin: var(--space-5) 0 0;
   padding: 0;

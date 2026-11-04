@@ -6,6 +6,7 @@
 
 .hero__inner {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
 
@@ -15,6 +16,13 @@
 
 .hero h1 {
   margin-bottom: var(--space-2);
+  /* With very large text the name must be allowed to break instead of widening the page. */
+  overflow-wrap: anywhere;
+}
+
+/* Lets the text column shrink below its longest word when text is very large. */
+.hero__text {
+  min-width: 0;
 }
 
 .hero__headline {
@@ -42,6 +50,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  min-width: 0;
+  max-width: 100%;
 }
 
 .hero__bio {

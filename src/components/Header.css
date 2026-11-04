@@ -23,19 +23,26 @@
 
 .site-header__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
-  height: var(--header-height);
+  gap: var(--space-1) var(--space-3);
+  /* One row of 56px normally. If text is made larger, or letters and words are spaced
+     wider, the header grows and wraps instead of pushing buttons off the screen. */
+  min-height: var(--header-height);
+  padding-block: var(--space-1);
 }
 
 .site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   font-weight: 600;
   text-decoration: none;
-  white-space: nowrap;
+  min-width: 0;
 }
 
 .site-header__brand:hover {
@@ -58,15 +65,14 @@
 }
 
 .site-nav__list a {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
   color: var(--text-muted);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition:
-    color var(--transition),
-    border-color var(--transition);
+  transition: color var(--transition);
 }
 
 .site-nav__list a:hover {
@@ -75,7 +81,9 @@
 
 .site-nav__list a[aria-current='true'] {
   color: var(--accent);
-  border-bottom-color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.45em;
 }
 
 /* ---------- Mobile menu ---------- */
@@ -84,8 +92,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
   border: 1px solid var(--text-muted);
   border-radius: var(--radius);
@@ -111,6 +119,12 @@
   padding: var(--space-2) var(--gutter) var(--space-3);
   background: var(--bg);
   border-bottom: 1px solid var(--border);
+  /* On a short screen (a phone on its side, or a very zoomed page) the menu is taller than
+     the space under the header. The header is sticky, so the menu must scroll by itself. */
+  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .site-nav__list.is-open a {
@@ -127,21 +141,26 @@
 
   .site-nav {
     margin-left: auto;
+    min-width: 0;
   }
 
   .site-nav__list,
   .site-nav__list.is-open {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     position: static;
-    gap: var(--space-4);
+    gap: var(--space-2);
     padding: 0;
     background: none;
     border: 0;
+    max-height: none;
+    overflow: visible;
   }
 
   .site-nav__list a,
   .site-nav__list.is-open a {
-    padding: var(--space-1) 0;
+    padding: 0 var(--space-2);
     font-size: var(--text-sm);
   }
 }

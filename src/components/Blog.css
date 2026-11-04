@@ -4,6 +4,7 @@
 
 .blog-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   margin: var(--space-3) 0 0;
   padding: 0;
   list-style: none;

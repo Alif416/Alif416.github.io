@@ -22,11 +22,14 @@ export const content: Content = {
     researchStatement:
       'I study how machine learning systems can be attacked and how to make them more trustworthy.',
     bio: "I'm Alif, a Computer Science graduate from BRAC University in Dhaka, Bangladesh. My research interests are AI security, adversarial machine learning, natural language processing, and federated learning. My undergraduate thesis, supervised by Mr. Moin Mostakim, looked at a remote patient monitoring system driven by federated learning. I'm now looking for PhD opportunities where I can keep working on trustworthy and secure machine learning.",
-    // The photo is public/photo.jpg (420 x 420). To change it, replace that file, and
-    // regenerate public/social-card.png (see design/social-card.html).
+    // The photo is public/photo.jpg (420 x 420), with smaller copies (192 and 384 wide) in
+    // JPEG and WebP. To change it, replace these files and regenerate
+    // public/social-card.png (see design/social-card.html).
     photo: {
       src: '/photo.jpg',
       alt: 'Portrait of Md Labibul Ahsan Alif, smiling, in a dark blue suit and tie',
+      srcSet: '/photo-192.jpg 192w, /photo-384.jpg 384w',
+      sources: [{ type: 'image/webp', srcSet: '/photo-192.webp 192w, /photo-384.webp 384w' }],
     },
   },
 

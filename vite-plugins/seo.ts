@@ -53,15 +53,17 @@ export default function seo(content: SeoContent): Plugin {
     ...(links.scholar ? ([['Google Scholar', links.scholar]] as [string, string][]) : []),
     ...(links.orcid ? ([['ORCID', links.orcid]] as [string, string][]) : []),
   ]
+  // It is the main part of the page when the app does not run, so it is a <main>. The links are
+  // chips (44px tall), styled by the same CSS as the rest of the site.
   const noscript = [
-    '<div class="container" style="padding-block: 2rem">',
+    '<main class="container" style="padding-block: 2rem">',
     `<h1>${esc(person.name)}</h1>`,
     `<p>${esc(person.headline)}</p>`,
     `<p>${esc(person.bio)}</p>`,
-    '<ul>',
-    ...noscriptLinks.map(([label, url]) => `<li><a href="${esc(url)}">${esc(label)}</a></li>`),
+    '<ul style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none">',
+    ...noscriptLinks.map(([label, url]) => `<li><a class="chip" href="${esc(url)}">${esc(label)}</a></li>`),
     '</ul>',
-    '</div>',
+    '</main>',
   ].join('')
 
   return {

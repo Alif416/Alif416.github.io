@@ -19,9 +19,22 @@ export interface Site {
   url: string
 }
 
+// Another version of the photo in a different format. The browser uses the first one it supports.
+export interface PhotoSource {
+  // For example "image/webp"
+  type: string
+  // File and width pairs, for example "/photo-192.webp 192w, /photo-384.webp 384w"
+  srcSet: string
+}
+
 export interface Photo {
+  // The main file, also used by browsers that do not understand the options below
   src: string
   alt: string
+  // Same photo at smaller sizes in the main format, for example "/photo-192.jpg 192w, /photo-384.jpg 384w"
+  srcSet?: string
+  // Same photo in other formats, best first
+  sources?: PhotoSource[]
 }
 
 export interface Person {

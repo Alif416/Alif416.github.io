@@ -17,6 +17,7 @@ export default function Header({ activeId, onNavigate }: HeaderProps) {
   const headerRef = useRef<HTMLElement>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
 
   // Show a bottom border once the page has scrolled (no scroll handler needed).
   useEffect(() => {
@@ -28,6 +29,12 @@ export default function Header({ activeId, onNavigate }: HeaderProps) {
     observer.observe(sentinel)
     return () => observer.disconnect()
   }, [])
+
+  // In the page order the menu links come before the menu button, so when the menu opens,
+  // move focus to its first link. Otherwise Tab would skip past the menu.
+  useEffect(() => {
+    if (open) listRef.current?.querySelector('a')?.focus()
+  }, [open])
 
   // Close the menu with Escape (and return focus to the button) or a click outside.
   useEffect(() => {
@@ -80,7 +87,11 @@ export default function Header({ activeId, onNavigate }: HeaderProps) {
           </a>
 
           <nav className="site-nav" aria-label="Main">
-            <ul id={MENU_ID} className={`site-nav__list${open ? ' is-open' : ''}`}>
+            <ul
+              ref={listRef}
+              id={MENU_ID}
+              className={`site-nav__list${open ? ' is-open' : ''}`}
+            >
               {nav.map((item) => (
                 <li key={item.id}>
                   <a

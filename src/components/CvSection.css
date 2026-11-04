@@ -1,5 +1,6 @@
 .cv-section {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   margin-top: var(--space-5);
 }
@@ -38,11 +39,16 @@
 
 .documents {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: start;
   gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.documents > li {
+  max-width: 100%;
 }
 
 .documents__updated {

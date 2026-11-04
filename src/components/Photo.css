@@ -1,3 +1,7 @@
+.photo-picture {
+  display: contents;
+}
+
 .photo {
   --photo-size: 7rem;
   display: block;
