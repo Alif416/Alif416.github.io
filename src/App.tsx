@@ -2,6 +2,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import Research from './components/Research'
 import Section from './components/Section'
+import ThesisSection from './components/ThesisSection'
 import { content } from './data/content'
 import { useActiveSection } from './hooks/useActiveSection'
 
@@ -10,7 +11,6 @@ const year = new Date().getFullYear()
 
 // Which phase fills each section. Remove a line when its section is built.
 const placeholders: Record<string, string> = {
-  thesis: 'TODO: Thesis and publications (Phase 8)',
   projects: 'TODO: Project cards (Phase 9)',
   blog: 'TODO: Blog list (Phase 12)',
   cv: 'TODO: CV, transcript, and education (Phase 10)',
@@ -29,8 +29,9 @@ function App() {
       <main id="main" tabIndex={-1}>
         <Hero />
         <Research />
+        <ThesisSection />
         {content.nav
-          .filter((item) => item.id !== 'about' && item.id !== 'research')
+          .filter((item) => !['about', 'research', 'thesis'].includes(item.id))
           .map((item) => (
             <Section key={item.id} id={item.id} heading={item.heading}>
               <p className="placeholder">{placeholders[item.id]}</p>

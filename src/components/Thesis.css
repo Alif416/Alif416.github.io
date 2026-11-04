@@ -1,0 +1,37 @@
+.thesis {
+  max-width: var(--measure);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--accent);
+}
+
+.thesis__label {
+  margin-bottom: var(--space-2);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.thesis h3 {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xl);
+}
+
+.thesis__meta {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.thesis__abstract {
+  margin: var(--space-3) 0 0;
+}
+
+.thesis__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}

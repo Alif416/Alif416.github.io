@@ -115,6 +115,8 @@ export interface Content {
   research: ResearchInterest[]
   thesis: Thesis
   publications: Publication[]
+  // Set to true only if Alif confirms he has manuscripts in preparation.
+  manuscriptsInPreparation: boolean
   projects: Project[]
   education: Education
   documents: Documents

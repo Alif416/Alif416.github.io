@@ -81,6 +81,9 @@ export const content: Content = {
   // No formal publications yet. Add entries here if that changes.
   publications: [],
 
+  // Only set to true if it is really the case. Shows "Manuscripts in preparation."
+  manuscriptsInPreparation: false,
+
   // TODO: Alif to provide the final 3 to 5 projects.
   projects: [],
 
