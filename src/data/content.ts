@@ -96,8 +96,17 @@ export const content: Content = {
   // Only set to true if it is really the case. Shows "Manuscripts in preparation."
   manuscriptsInPreparation: false,
 
-  // TODO: Alif to provide the final 3 to 5 projects.
-  projects: [],
+  projects: [
+    {
+      title: 'LevelUp: AI-powered interview preparation platform',
+      // Drafted from the project's README. Alif to confirm the wording.
+      summary:
+        'A platform for practising technical interviews. Candidates can take AI mock interviews, where Claude scores each answer and gives feedback on strengths and what to improve. Interviewers can invite candidates into private live rooms with a shared code editor. It also has a bank of practice problems, charts of past interview scores, and accounts with roles for candidates, interviewers, and admins. It is deployed as a live demo.',
+      tech: ['React', 'Express', 'PostgreSQL', 'Prisma', 'Socket.IO', 'Yjs', 'Redis', 'Claude API'],
+      githubUrl: 'https://github.com/Alif416/ai-interview-platform',
+      demoUrl: 'https://ai-interview-platform-sandy-one.vercel.app/',
+    },
+  ],
   projectsEmptyMessage: 'Projects are being added.',
 
   education: {

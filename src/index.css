@@ -290,6 +290,9 @@ pre {
 .chip {
   display: inline-flex;
   align-items: center;
+  /* With very large text the label wraps instead of making the chip wider than the screen. */
+  max-width: 100%;
+  text-align: center;
   min-height: 2.75rem;
   padding: 0 var(--space-3);
   border: 1px solid var(--text-muted);

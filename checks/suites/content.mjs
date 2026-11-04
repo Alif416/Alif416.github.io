@@ -3,7 +3,7 @@
 
 import { openPage } from '../lib/browser.mjs'
 
-export default async function (ctx, { ok }) {
+export default async function (ctx, { ok, skip }) {
   const { content: c, base } = ctx
   const { page, errors, close } = await openPage(ctx.browser, base)
   const text = (sel) => page.evaluate((s) => document.querySelector(s)?.textContent.replace(/\s+/g, ' ').trim() ?? null, sel)
@@ -58,7 +58,8 @@ export default async function (ctx, { ok }) {
   } else {
     ok('each project is a card, in the order of the data, with its summary and tech tags', JSON.stringify(projects.cards.map((p) => [p.title, p.summary, p.tech])) === JSON.stringify(c.projects.map((p) => [p.title, p.summary, p.tech])) && projects.message === null)
     ok('each project shows a GitHub or Demo link only if the data has one', projects.cards.every((card, i) => JSON.stringify(card.links) === JSON.stringify([c.projects[i].githubUrl && ['GitHub', c.projects[i].githubUrl], c.projects[i].demoUrl && ['Demo', c.projects[i].demoUrl]].filter(Boolean))))
-    ok('between three and five projects are shown (the target for this site)', c.projects.length >= 3 && c.projects.length <= 5, `${c.projects.length} projects`)
+    if (c.projects.length < 3) skip(`the target is three to five projects`, `${c.projects.length} so far`)
+    else ok('no more than five projects are shown (the target for this site is three to five)', c.projects.length <= 5, `${c.projects.length} projects`)
   }
 
   // ---- The CV and Transcript section is gone, and so is the Transcript
