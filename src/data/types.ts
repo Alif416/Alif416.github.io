@@ -4,7 +4,6 @@
 export type SectionId =
   | 'about'
   | 'research'
-  | 'thesis'
   | 'projects'
   | 'blog'
   | 'contact'
@@ -69,11 +68,6 @@ export interface NavItem {
   heading: string
 }
 
-export interface ResearchInterest {
-  title: string
-  description: string
-}
-
 export interface Thesis {
   title: string
   supervisor: string
@@ -81,17 +75,6 @@ export interface Thesis {
   abstract: string | null
   pdfUrl: string | null
   codeUrl: string | null
-}
-
-export interface Publication {
-  title: string
-  authors: string[]
-  venue: string
-  year: number
-  pdfUrl: string | null
-  arxivUrl: string | null
-  codeUrl: string | null
-  slidesUrl: string | null
 }
 
 export interface Project {
@@ -146,11 +129,9 @@ export interface Content {
   links: Links
   contact: Contact
   nav: NavItem[]
-  research: ResearchInterest[]
+  /** Short names of the research interests, shown as a list. */
+  research: string[]
   thesis: Thesis
-  publications: Publication[]
-  // Set to true only if Alif confirms he has manuscripts in preparation.
-  manuscriptsInPreparation: boolean
   projects: Project[]
   // Shown in the Projects section while the projects list is empty.
   projectsEmptyMessage: string

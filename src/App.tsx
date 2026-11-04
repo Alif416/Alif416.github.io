@@ -6,7 +6,6 @@ import Hero from './components/Hero'
 import PostPage from './components/PostPage'
 import Projects from './components/Projects'
 import Research from './components/Research'
-import ThesisSection from './components/ThesisSection'
 import { content } from './data/content'
 import type { SectionId } from './data/types'
 import { navItems, sectionIds } from './nav'
@@ -20,7 +19,6 @@ const year = new Date().getFullYear()
 const sections: Record<SectionId, ReactNode> = {
   about: <Hero />,
   research: <Research />,
-  thesis: <ThesisSection />,
   projects: <Projects />,
   blog: <Blog />,
   contact: <ContactSection />,

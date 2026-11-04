@@ -50,36 +50,12 @@ export const content: Content = {
   nav: [
     { id: 'about', label: 'About', heading: 'Md Labibul Ahsan Alif' },
     { id: 'research', label: 'Research', heading: 'Research' },
-    { id: 'thesis', label: 'Thesis', heading: 'Thesis and Publications' },
     { id: 'projects', label: 'Projects', heading: 'Projects' },
     { id: 'blog', label: 'Blog', heading: 'Blog and Notes' },
     { id: 'contact', label: 'Contact', heading: 'Contact' },
   ],
 
-  // TODO: Alif to review. These are general explanations of each field and
-  // make no claims about Alif's own work. Add your own details when ready.
-  research: [
-    {
-      title: 'AI security',
-      description:
-        'AI security looks at how machine learning systems can be misused, attacked, or made to fail, and how to protect them. As AI shows up in more real products, these weak spots matter to everyday users and not only to researchers.',
-    },
-    {
-      title: 'Adversarial machine learning',
-      description:
-        'Adversarial machine learning studies inputs that are crafted to fool a model, like an image or a sentence that is changed slightly so the model gives a wrong answer. The goal is to understand these attacks and build models that hold up against them.',
-    },
-    {
-      title: 'Natural language processing',
-      description:
-        'Natural language processing is about getting computers to work with human language, from search and translation to chat assistants. Language models now sit inside many everyday tools, so it matters to understand how they can go wrong.',
-    },
-    {
-      title: 'Federated learning',
-      description:
-        'Federated learning trains a shared model across many devices or sites without moving the raw data to one place. This matters in healthcare, where patient data is sensitive and has to stay private. My thesis is on a remote patient monitoring system driven by this approach.',
-    },
-  ],
+  research: ['AI security', 'Adversarial machine learning', 'Natural language processing', 'Federated learning'],
 
   thesis: {
     title: 'Remote patient monitoring system driven by federated learning',
@@ -89,12 +65,6 @@ export const content: Content = {
     pdfUrl: null, // TODO: Alif to provide
     codeUrl: null, // TODO: Alif to provide
   },
-
-  // No formal publications yet. Add entries here if that changes.
-  publications: [],
-
-  // Only set to true if it is really the case. Shows "Manuscripts in preparation."
-  manuscriptsInPreparation: false,
 
   projects: [
     {

@@ -42,14 +42,11 @@ export default async function (ctx, { ok }) {
   ok('the thesis is never described as something that was built ("built a federated learning system")', !/built a federated learning system/i.test(joined))
   ok('the degree is "Computer Science", never "Computer Science and Engineering"', !/Computer Science and Engineering/i.test(joined) && c.education.degree === 'B.Sc. in Computer Science')
   ok('no TODO, placeholder, or filler text is visible on the live page', !/\bTODO\b|lorem ipsum|placeholder/i.test(joined))
-  ok('"Manuscripts in preparation" appears only if the data says it is true', c.manuscriptsInPreparation || !/manuscripts? in preparation/i.test(joined))
   const stiff = STIFF.filter((w) => joined.toLowerCase().includes(w))
   ok('none of the stiff or machine-sounding words and phrases on the watch list appear', stiff.length === 0, stiff.join(', '))
   const bio = sentences(c.person.bio).length
   ok('the bio is 3 to 5 sentences', bio >= 3 && bio <= 5, `${bio} sentences`)
-  const research = c.research.map((r) => [r.title, sentences(r.description).length]).filter(([, n]) => n < 2 || n > 3)
-  ok('every research description is 2 to 3 sentences', research.length === 0, research.map(([t, n]) => `${t}: ${n}`).join(', '))
-  const longest = Math.max(...[c.person.bio, ...c.research.map((r) => r.description)].flatMap((t) => sentences(t)).map((s) => s.split(/\s+/).length))
+  const longest = Math.max(...[c.person.bio].flatMap((t) => sentences(t)).map((s) => s.split(/\s+/).length))
   ok('no sentence in the bio or research text is longer than 30 words', longest <= 30, `longest is ${longest}`)
   ok('"PhD", "Computer Science", and the name are written the same way everywhere', !/\bPh\.D|\bphd\b|\bPHD\b|\bPhd\b/.test(joined) && !/computer science/.test(joined.replace(/Computer Science/g, '')) && !/Md\. Labibul|Mohammad Labibul/.test(joined))
 }

@@ -116,15 +116,15 @@ export default async function (ctx, { ok }) {
     await sleep(150)
     a = await describe()
     ok(`${T}: Escape closes the menu and returns focus to the menu button`, a.cls === 'menu-button' && a.open === 'false')
-    if (ids.includes('thesis')) {
+    if (ids.includes('projects')) {
       await page.keyboard.press('Enter')
       await sleep(150)
-      const target = labels.indexOf(expected.navItems.find((n) => n.id === 'thesis').label)
+      const target = labels.indexOf(expected.navItems.find((n) => n.id === 'projects').label)
       for (let i = 0; i < target; i++) await page.keyboard.press('Tab')
       await page.keyboard.press('Enter')
       await sleep(900)
-      const nav = await page.evaluate(() => ({ hash: location.hash, open: document.querySelector('.menu-button').getAttribute('aria-expanded'), top: Math.round(document.getElementById('thesis-title').getBoundingClientRect().top), header: Math.round(document.querySelector('.site-header').getBoundingClientRect().height) }))
-      ok(`${T}: choosing a link with the keyboard jumps there and closes the menu`, nav.hash === '#thesis' && nav.open === 'false' && nav.top >= nav.header, JSON.stringify(nav))
+      const nav = await page.evaluate(() => ({ hash: location.hash, open: document.querySelector('.menu-button').getAttribute('aria-expanded'), top: Math.round(document.getElementById('projects-title').getBoundingClientRect().top), header: Math.round(document.querySelector('.site-header').getBoundingClientRect().height) }))
+      ok(`${T}: choosing a link with the keyboard jumps there and closes the menu`, nav.hash === '#projects' && nav.open === 'false' && nav.top >= nav.header, JSON.stringify(nav))
     }
     await close()
   }

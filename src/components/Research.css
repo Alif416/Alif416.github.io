@@ -1,34 +1,38 @@
+/* The interests as a row of tags. They fade in one after another, once, as the list scrolls
+   into view (skipped for reduced motion). */
 .research-list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-5);
-  margin: var(--space-5) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 var(--space-6);
   padding: 0;
   list-style: none;
 }
 
-/* Keep lines a comfortable length when there is only one column. */
 .research-list__item {
-  max-width: var(--measure);
+  max-width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
-.research-list__item h3 {
-  margin-bottom: var(--space-2);
-  font-size: var(--text-lg);
-}
-
-.research-list__item p {
-  margin: 0;
-}
-
-/* Two columns on wide screens so the section uses the page width. */
-@media (min-width: 64rem) {
-  .research-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6);
+@media (prefers-reduced-motion: no-preference) {
+  .research-list__item {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+    transition-delay: calc(var(--i, 0) * 120ms);
   }
 
-  .research-list__item {
-    max-width: none;
+  .research-list.is-visible .research-list__item {
+    opacity: 1;
+    transform: none;
   }
 }

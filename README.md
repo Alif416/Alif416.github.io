@@ -81,16 +81,14 @@ Open `src/data/content.ts`. The file is plain text with comments. Save it, and `
 | `links.github`, `links.linkedin`, `links.scholar`, `links.orcid` | Profile links, shown as icons in the hero and as buttons in Contact. Each `null` is hidden. |
 | `contact.intro` | An optional sentence above your email in the Contact section. `null` shows nothing. |
 | `nav` | The section order, the menu label, and the heading of each section. You can change `label` and `heading`. Do not change `id`, because the code depends on those names. |
-| `research` | The research interests: a `title` and a `description` each. The order here is the order on the page. |
-| `thesis` | `title`, `supervisor`, `year`, and the optional `abstract`, `pdfUrl`, and `codeUrl`. Each `null` is hidden. |
-| `publications` | A list of publications (see the example below). Empty means the whole Publications heading is hidden. |
-| `manuscriptsInPreparation` | Set to `true` only if it is true. It shows the line "Manuscripts in preparation." |
+| `research` | The research interests, as a list of short names. They show as tags, in this order. |
+| `thesis` | Shown inside the Research section, under the interests. `title`, `supervisor`, `year`, and the optional `abstract`, `pdfUrl`, and `codeUrl`. Each `null` is hidden. |
 | `projects` | A list of projects (see the example below). |
 | `projectsEmptyMessage` | The short line shown while `projects` is empty. |
 | `education` | `university`, `degree`, `batch`, and `cgpa`. Only `university` is used on the site today (in the search-engine data). The degree and grade are not shown on the page. |
 | `documents.cv` | The CV button in the hero: `label` and `url` (a Google Drive link). There is no transcript on the site. |
 
-A few fixed labels are not in the data file. They live in the components: "Undergraduate thesis", "Supervised by", "Publications", "RSS feed", "Back to Blog and Notes", "Skip to main content", "Post not found", and the button names for the menu and the theme switch.
+A few fixed labels are not in the data file. They live in the components: "Undergraduate thesis", "Supervised by", "RSS feed", "Back to Blog and Notes", "Skip to main content", "Post not found", and the button names for the menu and the theme switch.
 
 ### Add a project
 
@@ -110,25 +108,6 @@ projects: [
 ```
 
 Put the projects closest to your research first. Three to five is a good number. The page shows them as a timeline, in the order you write them, so put the date you want each one to carry in `date`.
-
-### Add a publication
-
-```ts
-publications: [
-  {
-    title: 'Title of the paper',
-    authors: ['Md Labibul Ahsan Alif', 'A. Coauthor'],
-    venue: 'Name of the conference or journal',
-    year: 2026,
-    pdfUrl: null,
-    arxivUrl: null,
-    codeUrl: null,
-    slidesUrl: null,
-  },
-],
-```
-
-Your own name is shown in bold when it matches `person.name` exactly. Newest first is automatic. If you have none, leave the list empty. The site never shows a publication that is not in this list.
 
 ### Add the thesis abstract and links
 

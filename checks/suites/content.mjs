@@ -33,10 +33,10 @@ export default async function (ctx, { ok, skip }) {
   else ok('no photo is set, so a letter in a circle is shown', photo?.tag === 'DIV')
 
   // ---- Research
-  const research = await page.evaluate(() => [...document.querySelectorAll('#research li')].map((li) => [li.querySelector('h3')?.textContent, li.querySelector('p')?.textContent]))
-  ok('the research interests are shown in the order and words in the data', JSON.stringify(research) === JSON.stringify(c.research.map((r) => [r.title, r.description])), `${research.length} of ${c.research.length}`)
+  const research = await page.evaluate(() => [...document.querySelectorAll('.research-list li')].map((li) => li.textContent))
+  ok('the research interests are shown as a plain list, in the order and words in the data, with no descriptions', JSON.stringify(research) === JSON.stringify(c.research), `${research.length} of ${c.research.length}`)
 
-  // ---- Thesis and publications
+  // ---- Thesis (inside the Research section; there is no publications list)
   const t = c.thesis
   ok('the thesis title and "Supervised by ..., year" line come from the data', (await text('.thesis h3')) === t.title && (await text('.thesis__meta')) === `Supervised by ${t.supervisor}, ${t.year}`)
   const abstract = await text('.thesis__abstract')
@@ -44,12 +44,7 @@ export default async function (ctx, { ok, skip }) {
   const thesisLinks = await links('.thesis__links a')
   const thesisWant = [t.pdfUrl && ['PDF', t.pdfUrl], t.codeUrl && ['Code', t.codeUrl]].filter(Boolean)
   ok('the thesis PDF and code links are shown only if set, open in a new tab, and are 44px tall', JSON.stringify(thesisLinks.map((l) => [l.label, l.href])) === JSON.stringify(thesisWant) && newTab(thesisLinks) && thesisLinks.every((l) => l.h >= 44), `${thesisLinks.length} links`)
-  const pubs = await page.evaluate(() => ({ heading: document.querySelector('.publications h3')?.textContent ?? null, note: document.querySelector('.publications__note')?.textContent ?? null, titles: [...document.querySelectorAll('.publications__title')].map((p) => p.textContent), bold: [...document.querySelectorAll('.publications__item strong')].map((s) => s.textContent) }))
-  const wantPubs = [...c.publications].sort((a, b) => b.year - a.year)
-  const showPubs = wantPubs.length > 0 || c.manuscriptsInPreparation
-  ok(showPubs ? 'the Publications heading is shown (there are publications or a manuscripts flag)' : 'there are no publications and no manuscripts flag, so there is no Publications heading', showPubs ? pubs.heading === 'Publications' : pubs.heading === null)
-  ok('publications are listed newest first, and your own name is in bold', JSON.stringify(pubs.titles) === JSON.stringify(wantPubs.map((p) => p.title)) && wantPubs.every((p) => !p.authors.includes(c.person.name) || pubs.bold.includes(c.person.name)))
-  ok('"Manuscripts in preparation." shows only if the data says so', c.manuscriptsInPreparation ? pubs.note === 'Manuscripts in preparation.' : pubs.note === null)
+  ok('the thesis sits inside the Research section, and there is no separate Thesis or Publications section', await page.evaluate(() => !!document.querySelector('#research .thesis') && !document.getElementById('thesis') && !document.querySelector('.publications')))
 
   // ---- Projects
   const projects = await page.evaluate(() => ({ cards: [...document.querySelectorAll('#projects article')].map((a) => ({ title: a.querySelector('h3')?.textContent, summary: a.querySelector('.project-card__summary')?.textContent, tech: [...a.querySelectorAll('.project-card__tech li')].map((x) => x.textContent), links: [...a.querySelectorAll('.chip')].map((x) => [x.textContent.replace(/\s*\(opens in a new tab\)/, ''), x.getAttribute('href')]) })), message: document.querySelector('#projects p.muted')?.textContent ?? null }))
