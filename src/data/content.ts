@@ -7,6 +7,7 @@ import type { Content } from './types.ts'
 export const content: Content = {
   site: {
     title: 'Md Labibul Ahsan Alif',
+    pageTitle: 'Md Labibul Ahsan Alif | AI security and machine learning',
     description:
       'Personal website of Md Labibul Ahsan Alif, a Computer Science graduate from BRAC University looking for PhD opportunities in AI security and machine learning.',
     url: 'https://alif416.github.io/',

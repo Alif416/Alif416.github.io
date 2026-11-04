@@ -11,7 +11,10 @@ export type SectionId =
   | 'contact'
 
 export interface Site {
+  // The site's name, for example in feed readers and link previews
   title: string
+  // The text in the browser tab and in search results
+  pageTitle: string
   description: string
   url: string
 }

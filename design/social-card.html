@@ -1,0 +1,98 @@
+<!doctype html>
+<!--
+  Template for public/social-card.png (the preview image shown when the site is shared).
+
+  To make the PNG again (for example after adding a photo):
+    1. Open this file in Chrome.
+    2. Open DevTools, select the element with class "card", and choose
+       "Capture node screenshot". The result is 1200 x 630.
+    3. Save it as public/social-card.png.
+
+  The name and headline must match src/data/content.ts (person.name, person.headline).
+  The colors match the light theme in src/index.css.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Social card</title>
+    <style>
+      @font-face {
+        font-family: 'Source Serif';
+        font-weight: 200 900;
+        src: url('../node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2')
+          format('woff2-variations');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-weight: 100 900;
+        src: url('../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
+          format('woff2-variations');
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: #ffffff;
+      }
+
+      .card {
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 1200px;
+        height: 630px;
+        padding: 0 96px 0 120px;
+        background: #ffffff;
+        overflow: hidden;
+      }
+
+      .bar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 24px;
+        background: #1f4e9c;
+      }
+
+      h1 {
+        margin: 0 0 28px;
+        color: #1a1d21;
+        font-family: 'Source Serif', Georgia, serif;
+        font-size: 88px;
+        font-weight: 600;
+        line-height: 1.1;
+      }
+
+      .headline {
+        max-width: 960px;
+        margin: 0;
+        color: #5b6470;
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 36px;
+        line-height: 1.4;
+      }
+
+      .url {
+        position: absolute;
+        bottom: 56px;
+        left: 120px;
+        margin: 0;
+        color: #1f4e9c;
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 28px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="bar"></div>
+      <h1>Md Labibul Ahsan Alif</h1>
+      <p class="headline">Computer Science graduate | Looking for PhD opportunities in AI security and machine learning</p>
+      <p class="url">alif416.github.io</p>
+    </div>
+  </body>
+</html>
