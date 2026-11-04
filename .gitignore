@@ -27,3 +27,7 @@ dist-ssr
 *.sln
 *.sw?
 .checks-tmp/
+
+# Private local files that must never be committed or pushed
+mission.md
+assets/
