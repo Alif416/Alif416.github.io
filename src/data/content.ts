@@ -93,10 +93,12 @@ export const content: Content = {
 
   documents: {
     cv: {
+      label: 'CV',
       url: 'https://drive.google.com/file/d/1gv0ED_YfjYtYTrVU0mwTi01HcdCSOwvv/view',
       lastUpdated: null, // TODO: Alif to provide, e.g. 'November 2026'
     },
     transcript: {
+      label: 'Transcript',
       url: 'https://drive.google.com/file/d/1KTvQu5uPRasSIC5ZTtPULu_xyU0asy9p/view',
       lastUpdated: null,
     },

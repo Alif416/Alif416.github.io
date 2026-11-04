@@ -1,4 +1,5 @@
 import Header from './components/Header'
+import Hero from './components/Hero'
 import Section from './components/Section'
 import { content } from './data/content'
 import { useActiveSection } from './hooks/useActiveSection'
@@ -8,7 +9,6 @@ const year = new Date().getFullYear()
 
 // Which phase fills each section. Remove a line when its section is built.
 const placeholders: Record<string, string> = {
-  about: 'TODO: Hero and bio (Phase 6)',
   research: 'TODO: Research interests (Phase 7)',
   thesis: 'TODO: Thesis and publications (Phase 8)',
   projects: 'TODO: Project cards (Phase 9)',
@@ -27,16 +27,14 @@ function App() {
       </a>
       <Header activeId={activeId} onNavigate={activate} />
       <main id="main" tabIndex={-1}>
-        {content.nav.map((item) => (
-          <Section
-            key={item.id}
-            id={item.id}
-            heading={item.heading}
-            level={item.id === 'about' ? 1 : 2}
-          >
-            <p className="placeholder">{placeholders[item.id]}</p>
-          </Section>
-        ))}
+        <Hero />
+        {content.nav
+          .filter((item) => item.id !== 'about')
+          .map((item) => (
+            <Section key={item.id} id={item.id} heading={item.heading}>
+              <p className="placeholder">{placeholders[item.id]}</p>
+            </Section>
+          ))}
         <div id="page-end" aria-hidden="true" />
       </main>
       <footer className="site-footer">

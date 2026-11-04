@@ -1,0 +1,27 @@
+.photo {
+  --photo-size: 7rem;
+  display: block;
+  width: var(--photo-size);
+  height: var(--photo-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.photo--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: calc(var(--photo-size) * 0.45);
+  font-weight: 600;
+  user-select: none;
+}
+
+@media (min-width: 48rem) {
+  .photo {
+    --photo-size: 12rem;
+  }
+}

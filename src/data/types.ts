@@ -95,6 +95,8 @@ export interface Education {
 }
 
 export interface Document {
+  // Button text
+  label: string
   url: string
   // e.g. "November 2026"; null until Alif provides it
   lastUpdated: string | null
