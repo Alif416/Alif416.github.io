@@ -71,6 +71,36 @@ export const content: Content = {
 
   projects: [
     {
+      title: 'Brain Tumor Segmentation',
+      // From the PhD CV. Alif to add the Kaggle link (and a date if wanted).
+      date: null,
+      summary:
+        'A comparison of U-Net and Attention U-Net for segmenting glioma, meningioma, and pituitary tumors in brain MRI scans from the BRISC dataset. The two models scored almost the same, with mean Dice 0.837 for U-Net and 0.838 for Attention U-Net, so attention gave no clear gain.',
+      tech: ['PyTorch', 'U-Net', 'Attention U-Net', 'Brain MRI'],
+      githubUrl: null,
+      demoUrl: null,
+    },
+    {
+      title: 'LoanIQ: credit risk ML pipeline',
+      // From the PhD CV. The date is when the GitHub repository was created.
+      date: 'Jun 2025',
+      summary:
+        'A credit default model trained on LendingClub loans. I split the data by time (train 2007 to 2016, test 2017 to 2018, 206,082 loans) and used 22 features known when a loan is made, to avoid leakage. XGBoost scored best of four models, with ROC-AUC 0.716 against about 0.85 on a leaky random split. Tuning the threshold raised default recall from 1% to 43%. It has TreeSHAP explanations, 48 tests, and CI.',
+      tech: ['Python', 'XGBoost', 'scikit-learn', 'TreeSHAP', 'pytest', 'GitHub Actions', 'Streamlit'],
+      githubUrl: 'https://github.com/Alif416/LoanIQ',
+      demoUrl: 'https://loan-prediction-ml-k4xffncvhbyh7h9qy72mjk.streamlit.app/',
+    },
+    {
+      title: 'VAE-based music clustering',
+      // From the PhD CV. The date is when the GitHub repository was created.
+      date: 'Jan 2026',
+      summary:
+        'A course project for Neural Networks. It compares VAE variants with PCA and raw-feature baselines for clustering 312 GTZAN music clips from 4 genres. PCA did best (purity 0.63) and Conv-VAE was the best deep model (0.38), with overfitting on the small dataset. The lyrics inputs were stand-ins, not real lyrics.',
+      tech: ['PyTorch', 'VAE', 'β-VAE', 'Conv-VAE', 'CVAE', 'K-Means', 'PCA'],
+      githubUrl: 'https://github.com/Alif416/vae-hybrid-language-music-clustering',
+      demoUrl: null,
+    },
+    {
       title: 'LevelUp: AI-powered interview preparation platform',
       // Taken from the date the GitHub repository was created. Alif to confirm.
       date: 'May 2026',
