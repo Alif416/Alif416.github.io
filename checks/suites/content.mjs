@@ -36,19 +36,14 @@ export default async function (ctx, { ok, skip }) {
   const research = await page.evaluate(() => [...document.querySelectorAll('.research-list li')].map((li) => li.textContent))
   ok('the research interests are shown as a plain list, in the order and words in the data, with no descriptions', JSON.stringify(research) === JSON.stringify(c.research), `${research.length} of ${c.research.length}`)
 
-  // ---- Thesis (inside the Research section; there is no publications list)
-  const t = c.thesis
-  ok('the thesis title and "Supervised by ..., year" line come from the data', (await text('.thesis h3')) === t.title && (await text('.thesis__meta')) === `Supervised by ${t.supervisor}, ${t.year}`)
-  const abstract = await text('.thesis__abstract')
-  ok(t.abstract ? 'the thesis abstract is shown' : 'there is no abstract in the data, so no abstract is shown', t.abstract ? abstract === t.abstract : abstract === null)
-  const thesisLinks = await links('.thesis__links a')
-  const thesisWant = [t.pdfUrl && ['PDF', t.pdfUrl], t.codeUrl && ['Code', t.codeUrl]].filter(Boolean)
-  ok('the thesis PDF and code links are shown only if set, open in a new tab, and are 44px tall', JSON.stringify(thesisLinks.map((l) => [l.label, l.href])) === JSON.stringify(thesisWant) && newTab(thesisLinks) && thesisLinks.every((l) => l.h >= 44), `${thesisLinks.length} links`)
-  const ms = await page.evaluate(() => [...document.querySelectorAll('.milestones li')].map((li) => li.textContent))
-  ok('the thesis milestones are shown in the order of the data, and hidden when there are none', JSON.stringify(ms) === JSON.stringify(t.milestones.map((m) => (m.date ?? '') + m.label)), ms.join(' | '))
-  const lay = await page.evaluate(() => { const r = (s) => { const b = document.querySelector(s)?.getBoundingClientRect(); return b && { left: b.left, right: b.right } }; return { thesis: r('#research .thesis'), box: r('.research-box'), inner: innerWidth } })
-  ok('on a wide screen the thesis is on the left and the interests box is on the right', lay.inner < 768 || (lay.thesis.right <= lay.box.left + 1), JSON.stringify(lay))
-  ok('the thesis sits inside the Research section, and there is no separate Thesis or Publications section', await page.evaluate(() => !!document.querySelector('#research .thesis') && !document.getElementById('thesis') && !document.querySelector('.publications')))
+  // ---- Thesis and papers (a timeline inside the Research section, one dot for each)
+  const papers = await page.evaluate(() => [...document.querySelectorAll('.papers__item')].map((li) => ({ kind: li.querySelector('.papers__label')?.textContent ?? null, title: li.querySelector('h3')?.textContent ?? null, meta: li.querySelector('.papers__meta')?.textContent ?? null, abstract: li.querySelector('.papers__abstract')?.textContent ?? null, links: [...li.querySelectorAll('.papers__links a')].map((a) => [a.textContent.replace(/\s*\(opens in a new tab\)/, ''), a.getAttribute('href'), a.target, a.rel.includes('noopener'), Math.round(a.getBoundingClientRect().height)]) })))
+  ok('each thesis or paper is one entry, in the order of the data, with its title and meta line', JSON.stringify(papers.map((p) => [p.title, p.meta])) === JSON.stringify(c.papers.map((p) => [p.title, p.meta])), `${papers.length} of ${c.papers.length}`)
+  ok('the kind and date line, and the abstract, are shown only when set', papers.every((p, i) => p.kind === c.papers[i].kind + (c.papers[i].date ?? '') && p.abstract === c.papers[i].abstract))
+  ok('PDF and code links are shown only if set, open in a new tab, and are 44px tall', papers.every((p, i) => JSON.stringify(p.links.map((l) => [l[0], l[1]])) === JSON.stringify([c.papers[i].pdfUrl && ['PDF', c.papers[i].pdfUrl], c.papers[i].codeUrl && ['Code', c.papers[i].codeUrl]].filter(Boolean)) && p.links.every((l) => l[2] === '_blank' && l[3] && l[4] >= 44)))
+  const lay = await page.evaluate(() => { const r = (s) => { const b = document.querySelector(s)?.getBoundingClientRect(); return b && { left: b.left, right: b.right } }; return { papers: r('.papers'), box: r('.research-box'), inner: innerWidth } })
+  ok('on a wide screen the papers timeline is on the left and the sticky notes box is on the right', c.papers.length === 0 || lay.inner < 768 || lay.papers.right <= lay.box.left + 1, JSON.stringify(lay))
+  ok('the thesis is inside the Research section, and there is no separate Thesis or Publications section', await page.evaluate(() => (!!document.querySelector('#research .papers') || !document.querySelector('.papers')) && !document.getElementById('thesis') && !document.querySelector('.publications')))
 
   // ---- Projects
   const projects = await page.evaluate(() => ({ cards: [...document.querySelectorAll('#projects article')].map((a) => ({ title: a.querySelector('h3')?.textContent, summary: a.querySelector('.project-card__summary')?.textContent, tech: [...a.querySelectorAll('.project-card__tech li')].map((x) => x.textContent), links: [...a.querySelectorAll('.chip')].map((x) => [x.textContent.replace(/\s*\(opens in a new tab\)/, ''), x.getAttribute('href')]) })), message: document.querySelector('#projects p.muted')?.textContent ?? null }))

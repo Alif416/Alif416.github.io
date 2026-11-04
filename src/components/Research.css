@@ -27,41 +27,82 @@
   }
 }
 
-/* The interests as a row of tags. They fade in one after another, once, as the list scrolls
-   into view (skipped for reduced motion). */
+/* The interests as sticky notes: small pastel squares with a slight tilt that straightens on
+   hover. They fade in one after another, once, as the box scrolls into view (skipped for
+   reduced motion). The notes keep dark text on a pastel in both themes, like real paper. */
 .research-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(9rem, 100%), 1fr));
+  gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .research-list__item {
-  max-width: 100%;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  color: var(--text);
+  --tilt: -1.5deg;
+  --note: #fdf0a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 7rem;
+  padding: var(--space-3);
+  background: var(--note);
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.18);
+  color: #1f2430;
   font-family: var(--font-sans);
   font-size: var(--text-base);
-  line-height: 1.5;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
   overflow-wrap: anywhere;
+  transform: rotate(var(--tilt));
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.research-list__item:nth-child(4n + 2) {
+  --tilt: 1.5deg;
+  --note: #bfe3d0;
+}
+
+.research-list__item:nth-child(4n + 3) {
+  --tilt: 1deg;
+  --note: #f7c6d0;
+}
+
+.research-list__item:nth-child(4n + 4) {
+  --tilt: -1deg;
+  --note: #bcd7f2;
+}
+
+.research-list__item:hover {
+  transform: rotate(0deg);
+  box-shadow: 0 4px 10px rgb(0 0 0 / 0.22);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .research-list__item {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateY(0.5rem) rotate(var(--tilt));
     transition:
       opacity 0.5s ease,
-      transform 0.5s ease;
+      transform 0.5s ease,
+      box-shadow var(--transition);
     transition-delay: calc(var(--i, 0) * 120ms);
   }
 
   .research-list.is-visible .research-list__item {
     opacity: 1;
-    transform: none;
+    transform: rotate(var(--tilt));
+  }
+
+  /* Hover should respond at once, not after the entrance delay. */
+  .research-list.is-visible .research-list__item:hover {
+    transform: rotate(0deg);
+    transition-delay: 0s;
   }
 }

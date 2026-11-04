@@ -1,10 +1,10 @@
 import { content } from '../data/content'
 import { useReveal } from '../hooks/useReveal'
 import Section from './Section'
-import Thesis from './Thesis'
+import Papers from './Papers'
 import './Research.css'
 
-// The Research section: the thesis on the left, and the interests in a box on the right.
+// The Research section: the thesis and papers timeline on the left, and the interests as sticky notes on the right.
 export default function Research() {
   const nav = content.nav.find((item) => item.id === 'research')
   const interests = content.research
@@ -13,7 +13,7 @@ export default function Research() {
   return (
     <Section id="research" heading={nav?.heading ?? 'Research'}>
       <div className="research-layout">
-        <Thesis />
+        <Papers />
         {interests.length > 0 && (
           <div className="research-box">
             <h3 className="research-box__title">Research interests</h3>

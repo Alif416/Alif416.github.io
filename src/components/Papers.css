@@ -1,10 +1,49 @@
-.thesis {
-  max-width: var(--measure);
-  padding-left: var(--space-4);
-  border-left: 3px solid var(--accent);
+/* The thesis and papers: a line with one dot for each. Each entry fades in once as it
+   scrolls into view (skipped for reduced motion). */
+.papers {
+  --gap: min(var(--space-4), 6vw);
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0 0 0 var(--gap);
+  list-style: none;
 }
 
-.thesis__label {
+.papers::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.3125rem;
+  width: 2px;
+  background: var(--border);
+}
+
+.papers__item {
+  position: relative;
+  min-width: 0;
+}
+
+.papers__item::before {
+  content: '';
+  position: absolute;
+  top: 0.35rem;
+  left: calc(-1 * var(--gap));
+  width: 0.75rem;
+  height: 0.75rem;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  transition: background-color var(--transition);
+}
+
+.papers__item.is-visible::before {
+  background: var(--accent);
+}
+
+.papers__label {
   margin-bottom: var(--space-2);
   color: var(--text-muted);
   font-family: var(--font-sans);
@@ -13,92 +52,45 @@
   text-transform: uppercase;
 }
 
-.thesis h3 {
-  margin-bottom: var(--space-2);
-  font-size: var(--text-xl);
+.papers__date {
+  margin-left: var(--space-2);
+  letter-spacing: 0;
 }
 
-.thesis__meta {
+.papers h3 {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xl);
+  overflow-wrap: anywhere;
+}
+
+.papers__meta {
   margin-bottom: 0;
   color: var(--text-muted);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
 }
 
-.thesis__abstract {
+.papers__abstract {
   margin: var(--space-3) 0 0;
 }
 
-.thesis__links {
+.papers__links {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
   margin-top: var(--space-3);
 }
 
-/* A small timeline: a line with a dot for each step. Each step fades in once as it
-   scrolls into view (skipped for reduced motion). */
-.milestones {
-  --gap: min(var(--space-4), 6vw);
-  position: relative;
-  display: grid;
-  gap: var(--space-3);
-  margin: var(--space-4) 0 0;
-  padding: 0 0 0 var(--gap);
-  list-style: none;
-}
-
-.milestones::before {
-  content: '';
-  position: absolute;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  left: 0.25rem;
-  width: 2px;
-  background: var(--border);
-}
-
-.milestones__item {
-  position: relative;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.milestones__item::before {
-  content: '';
-  position: absolute;
-  top: 0.5rem;
-  left: calc(-1 * var(--gap));
-  width: 0.625rem;
-  height: 0.625rem;
-  box-sizing: border-box;
-  background: var(--bg);
-  border: 2px solid var(--accent);
-  border-radius: 50%;
-  transition: background-color var(--transition);
-}
-
-.milestones__item.is-visible::before {
-  background: var(--accent);
-}
-
-.milestones__date {
-  display: block;
-  color: var(--text-muted);
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  .milestones__item {
+  .papers__item {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateY(0.75rem);
     transition:
       opacity 0.5s ease,
       transform 0.5s ease;
   }
 
-  .milestones__item.is-visible {
+  .papers__item.is-visible {
     opacity: 1;
     transform: none;
   }

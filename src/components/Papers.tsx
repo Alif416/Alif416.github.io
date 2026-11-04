@@ -1,46 +1,46 @@
 import { content } from '../data/content'
-import type { Milestone } from '../data/types'
+import type { Paper } from '../data/types'
 import { useReveal } from '../hooks/useReveal'
 import ExternalChip from './ExternalChip'
-import './Thesis.css'
+import './Papers.css'
 
-function MilestoneItem({ milestone }: { milestone: Milestone }) {
+function PaperItem({ paper }: { paper: Paper }) {
   const { ref, visible } = useReveal<HTMLLIElement>()
+  const { kind, title, meta, date, abstract, pdfUrl, codeUrl } = paper
+  const hasLinks = pdfUrl !== null || codeUrl !== null
+
   return (
-    <li ref={ref} className={`milestones__item${visible ? ' is-visible' : ''}`}>
-      {milestone.date && <span className="milestones__date">{milestone.date}</span>}
-      {milestone.label}
+    <li ref={ref} className={`papers__item${visible ? ' is-visible' : ''}`}>
+      <article>
+        <p className="papers__label">
+          {kind}
+          {date && <span className="papers__date">{date}</span>}
+        </p>
+        <h3>{title}</h3>
+        <p className="papers__meta">{meta}</p>
+        {abstract && <p className="papers__abstract">{abstract}</p>}
+        {hasLinks && (
+          <div className="papers__links">
+            {pdfUrl && <ExternalChip href={pdfUrl} label="PDF" />}
+            {codeUrl && <ExternalChip href={codeUrl} label="Code" />}
+          </div>
+        )}
+      </article>
     </li>
   )
 }
 
-// The thesis block. Anything that is null or empty in content.ts (abstract, links,
-// milestones) is left out.
-export default function Thesis() {
-  const { title, supervisor, year, abstract, pdfUrl, codeUrl, milestones } = content.thesis
-  const hasLinks = pdfUrl !== null || codeUrl !== null
+// The thesis and papers as a vertical timeline, one dot for each. Anything that is null in
+// content.ts (date, abstract, links) is left out.
+export default function Papers() {
+  const { papers } = content
+  if (papers.length === 0) return null
 
   return (
-    <article className="thesis" aria-labelledby="thesis-heading">
-      <p className="thesis__label">Undergraduate thesis</p>
-      <h3 id="thesis-heading">{title}</h3>
-      <p className="thesis__meta">
-        Supervised by {supervisor}, {year}
-      </p>
-      {abstract && <p className="thesis__abstract">{abstract}</p>}
-      {milestones.length > 0 && (
-        <ol className="milestones" aria-label="Thesis milestones">
-          {milestones.map((milestone) => (
-            <MilestoneItem key={milestone.label} milestone={milestone} />
-          ))}
-        </ol>
-      )}
-      {hasLinks && (
-        <div className="thesis__links">
-          {pdfUrl && <ExternalChip href={pdfUrl} label="PDF" />}
-          {codeUrl && <ExternalChip href={codeUrl} label="Code" />}
-        </div>
-      )}
-    </article>
+    <ol className="papers" aria-label="Thesis and papers">
+      {papers.map((paper) => (
+        <PaperItem key={paper.title} paper={paper} />
+      ))}
+    </ol>
   )
 }

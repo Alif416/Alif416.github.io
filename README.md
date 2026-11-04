@@ -82,13 +82,13 @@ Open `src/data/content.ts`. The file is plain text with comments. Save it, and `
 | `contact.intro` | An optional sentence above your email in the Contact section. `null` shows nothing. |
 | `nav` | The section order, the menu label, and the heading of each section. You can change `label` and `heading`. Do not change `id`, because the code depends on those names. |
 | `research` | The research interests, as a list of short names. They show as tags, in this order. |
-| `thesis` | Shown on the left of the Research section, next to the interests box. `title`, `supervisor`, `year`, the optional `abstract`, `pdfUrl`, and `codeUrl` (each `null` is hidden), and `milestones`, a list of steps with a `label` and an optional `date`, shown as a small timeline. An empty list hides it. |
+| `papers` | Your thesis and any papers, oldest first, shown as a timeline on the left of the Research section with one dot each. Each has `kind` (for example `Undergraduate thesis`), `title`, `meta` (a line such as `Supervised by ..., 2026` or the venue), `date`, and the optional `abstract`, `pdfUrl`, and `codeUrl`. Each `null` is hidden. An empty list hides the timeline. |
 | `projects` | A list of projects (see the example below). |
 | `projectsEmptyMessage` | The short line shown while `projects` is empty. |
 | `education` | `university`, `degree`, `batch`, and `cgpa`. Only `university` is used on the site today (in the search-engine data). The degree and grade are not shown on the page. |
 | `documents.cv` | The CV button in the hero: `label` and `url` (a Google Drive link). There is no transcript on the site. |
 
-A few fixed labels are not in the data file. They live in the components: "Undergraduate thesis", "Supervised by", "RSS feed", "Back to Blog and Notes", "Skip to main content", "Post not found", and the button names for the menu and the theme switch.
+A few fixed labels are not in the data file. They live in the components: "RSS feed", "Back to Blog and Notes", "Skip to main content", "Post not found", and the button names for the menu and the theme switch.
 
 ### Add a project
 
@@ -109,20 +109,26 @@ projects: [
 
 Put the projects closest to your research first. Three to five is a good number. The page shows them as a timeline, in the order you write them, so put the date you want each one to carry in `date`.
 
-### Add the thesis abstract and links
+### Add a paper, or the thesis abstract and links
+
+Each entry in `papers` is one dot on the timeline. Add a new one after the thesis:
 
 ```ts
-thesis: {
-  title: 'Remote patient monitoring system driven by federated learning',
-  supervisor: 'Mr. Moin Mostakim',
-  year: 2026,
-  abstract: 'A short abstract, in plain words.',
-  pdfUrl: 'https://drive.google.com/file/d/.../view',
-  codeUrl: 'https://github.com/your-name/thesis-code',
-},
+papers: [
+  {
+    kind: 'Undergraduate thesis',
+    title: 'Remote patient monitoring system driven by federated learning',
+    meta: 'Supervised by Mr. Moin Mostakim, 2026',
+    date: '2026',
+    abstract: 'A short abstract, in plain words.',
+    pdfUrl: 'https://drive.google.com/file/d/.../view',
+    codeUrl: 'https://github.com/your-name/thesis-code',
+  },
+  // A later paper: kind: 'Conference paper', meta: 'Venue name, 2027', and so on.
+],
 ```
 
-Describe the thesis as being "on" or "about" the topic, as it is today. Do not write that you built something you did not build.
+Only list papers that exist. Describe the thesis as being "on" or "about" the topic. Do not write that you built something you did not build.
 
 ### Other common edits
 

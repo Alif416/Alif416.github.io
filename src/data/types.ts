@@ -68,20 +68,17 @@ export interface NavItem {
   heading: string
 }
 
-export interface Thesis {
+export interface Paper {
+  /** What kind of work it is, for example 'Undergraduate thesis' or 'Conference paper'. */
+  kind: string
   title: string
-  supervisor: string
-  year: number
+  /** One line under the title, for example 'Supervised by ..., 2026' or the venue. */
+  meta: string
+  /** Shown on the timeline, for example '2026'. null hides it. */
+  date: string | null
   abstract: string | null
   pdfUrl: string | null
   codeUrl: string | null
-  /** Steps shown as a small timeline under the thesis. Empty hides it. */
-  milestones: Milestone[]
-}
-
-export interface Milestone {
-  label: string
-  date: string | null
 }
 
 export interface Project {
@@ -138,7 +135,8 @@ export interface Content {
   nav: NavItem[]
   /** Short names of the research interests, shown as a list. */
   research: string[]
-  thesis: Thesis
+  /** The thesis and any papers, oldest first. One dot on the timeline each. Empty hides the timeline. */
+  papers: Paper[]
   projects: Project[]
   // Shown in the Projects section while the projects list is empty.
   projectsEmptyMessage: string

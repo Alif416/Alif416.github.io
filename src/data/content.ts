@@ -57,19 +57,17 @@ export const content: Content = {
 
   research: ['AI security', 'Adversarial machine learning', 'Natural language processing', 'Federated learning'],
 
-  thesis: {
-    title: 'Remote patient monitoring system driven by federated learning',
-    supervisor: 'Mr. Moin Mostakim',
-    year: 2026,
-    abstract: null, // TODO: Alif to provide
-    pdfUrl: null, // TODO: Alif to provide
-    codeUrl: null, // TODO: Alif to provide
-    // Only facts already on the site. Alif to replace with the real steps and dates.
-    milestones: [
-      { label: 'Began the thesis under Mr. Moin Mostakim', date: null },
-      { label: 'Thesis on federated learning for remote patient monitoring', date: '2026' },
-    ],
-  },
+  papers: [
+    {
+      kind: 'Undergraduate thesis',
+      title: 'Remote patient monitoring system driven by federated learning',
+      meta: 'Supervised by Mr. Moin Mostakim, 2026',
+      date: '2026',
+      abstract: null, // TODO: Alif to provide
+      pdfUrl: null, // TODO: Alif to provide
+      codeUrl: null, // TODO: Alif to provide
+    },
+  ],
 
   projects: [
     {
