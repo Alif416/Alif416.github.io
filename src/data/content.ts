@@ -1,0 +1,104 @@
+// All site text and links live here. Edit this file to change the site.
+// Missing values are `null` (the UI hides them) or empty arrays.
+// Do not use em-dashes or double dashes in any text.
+
+import type { Content } from './types'
+
+export const content: Content = {
+  site: {
+    title: 'Md Labibul Ahsan Alif',
+    description:
+      'Personal website of Md Labibul Ahsan Alif, a Computer Science graduate from BRAC University looking for PhD opportunities in AI security and machine learning.',
+    url: 'https://alif416.github.io/',
+  },
+
+  person: {
+    name: 'Md Labibul Ahsan Alif',
+    shortName: 'Alif',
+    location: 'Dhaka, Bangladesh',
+    headline:
+      'Computer Science graduate | Looking for PhD opportunities in AI security and machine learning',
+    researchStatement:
+      'I study how machine learning systems can be attacked and how to make them more trustworthy.',
+    bio: "I'm Alif, a Computer Science graduate from BRAC University in Dhaka, Bangladesh. My research interests are AI security, adversarial machine learning, natural language processing, and federated learning. My undergraduate thesis, supervised by Mr. Moin Mostakim, looked at a remote patient monitoring system driven by federated learning. I'm now looking for PhD opportunities where I can keep working on trustworthy and secure machine learning.",
+    // TODO: add photo. Put the file at public/photo.jpg, then replace null with
+    // { src: '/photo.jpg', alt: 'Portrait of Md Labibul Ahsan Alif' }
+    photo: null,
+  },
+
+  links: {
+    email: { user: 'labibalif2001', domain: 'gmail.com' },
+    github: 'https://github.com/Alif416',
+    linkedin: 'https://www.linkedin.com/in/labibul-ahsan-alif-b70974291/',
+    scholar: 'https://scholar.google.com/citations?user=LSZb0cQAAAAJ&hl=en',
+    orcid: null, // not provided yet
+  },
+
+  nav: [
+    { id: 'about', label: 'About' },
+    { id: 'research', label: 'Research' },
+    { id: 'thesis', label: 'Thesis' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'blog', label: 'Blog' },
+    { id: 'cv', label: 'CV' },
+    { id: 'contact', label: 'Contact' },
+  ],
+
+  // TODO: Alif to review. These are general explanations of each field and
+  // make no claims about Alif's own work. Add your own details when ready.
+  research: [
+    {
+      title: 'AI security',
+      description:
+        'AI security looks at how machine learning systems can be misused, attacked, or made to fail, and how to protect them. As AI shows up in more real products, these weak spots matter to everyday users and not only to researchers.',
+    },
+    {
+      title: 'Adversarial machine learning',
+      description:
+        'Adversarial machine learning studies inputs that are crafted to fool a model, like an image or a sentence that is changed slightly so the model gives a wrong answer. The goal is to understand these attacks and build models that hold up against them.',
+    },
+    {
+      title: 'Natural language processing',
+      description:
+        'Natural language processing is about getting computers to work with human language, from search and translation to chat assistants. I am interested in how these systems behave when the text they see is unusual or deliberately misleading.',
+    },
+    {
+      title: 'Federated learning',
+      description:
+        'Federated learning trains a shared model across many devices or sites without moving the raw data to one place. This matters in healthcare, where patient data is sensitive and has to stay private. My thesis is on a remote patient monitoring system driven by this approach.',
+    },
+  ],
+
+  thesis: {
+    title: 'Remote patient monitoring system driven by federated learning',
+    supervisor: 'Mr. Moin Mostakim',
+    year: 2026,
+    abstract: null, // TODO: Alif to provide
+    pdfUrl: null, // TODO: Alif to provide
+    codeUrl: null, // TODO: Alif to provide
+  },
+
+  // No formal publications yet. Add entries here if that changes.
+  publications: [],
+
+  // TODO: Alif to provide the final 3 to 5 projects.
+  projects: [],
+
+  education: {
+    university: 'BRAC University',
+    degree: 'B.Sc. in Computer Science',
+    batch: 'January 2026',
+    cgpa: '3.40',
+  },
+
+  documents: {
+    cv: {
+      url: 'https://drive.google.com/file/d/1gv0ED_YfjYtYTrVU0mwTi01HcdCSOwvv/view',
+      lastUpdated: null, // TODO: Alif to provide, e.g. 'November 2026'
+    },
+    transcript: {
+      url: 'https://drive.google.com/file/d/1KTvQu5uPRasSIC5ZTtPULu_xyU0asy9p/view',
+      lastUpdated: null,
+    },
+  },
+}

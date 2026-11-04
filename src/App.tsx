@@ -1,7 +1,9 @@
+import { content } from './data/content'
+
 function App() {
   return (
     <main>
-      <h1>Md Labibul Ahsan Alif</h1>
+      <h1>{content.person.name}</h1>
     </main>
   )
 }
