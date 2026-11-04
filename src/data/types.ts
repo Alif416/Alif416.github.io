@@ -107,10 +107,16 @@ export interface Documents {
   transcript: Document
 }
 
+export interface Contact {
+  // One sentence shown above the email. null means no intro is shown.
+  intro: string | null
+}
+
 export interface Content {
   site: Site
   person: Person
   links: Links
+  contact: Contact
   nav: NavItem[]
   research: ResearchInterest[]
   thesis: Thesis

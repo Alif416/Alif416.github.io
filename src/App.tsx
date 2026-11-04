@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from 'react'
+import ContactSection from './components/ContactSection'
 import CvSection from './components/CvSection'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -21,12 +22,12 @@ const builtSections: Partial<Record<SectionId, ReactNode>> = {
   thesis: <ThesisSection />,
   projects: <Projects />,
   cv: <CvSection />,
+  contact: <ContactSection />,
 }
 
 // Which phase fills each section that is not built yet. Remove a line when built.
 const placeholders: Partial<Record<SectionId, string>> = {
   blog: 'TODO: Blog list (Phase 12)',
-  contact: 'TODO: Contact details (Phase 11)',
 }
 
 function App() {

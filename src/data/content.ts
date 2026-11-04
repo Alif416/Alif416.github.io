@@ -34,6 +34,12 @@ export const content: Content = {
     orcid: null, // not provided yet
   },
 
+  contact: {
+    // Suggested wording, not approved yet. To show it, replace null with the sentence:
+    // 'If you work on AI security or machine learning and have a PhD opening, I would be glad to hear from you.'
+    intro: null,
+  },
+
   nav: [
     { id: 'about', label: 'About', heading: 'Md Labibul Ahsan Alif' },
     { id: 'research', label: 'Research', heading: 'Research' },
