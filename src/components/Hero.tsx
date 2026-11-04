@@ -24,11 +24,6 @@ export default function Hero() {
                 label={documents.cv.label}
                 variant="primary"
               />
-              <DocumentButton
-                url={documents.transcript.url}
-                label={documents.transcript.label}
-                variant="secondary"
-              />
             </div>
             <ProfileLinks />
           </div>

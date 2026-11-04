@@ -53,7 +53,6 @@ export const content: Content = {
     { id: 'thesis', label: 'Thesis', heading: 'Thesis and Publications' },
     { id: 'projects', label: 'Projects', heading: 'Projects' },
     { id: 'blog', label: 'Blog', heading: 'Blog and Notes' },
-    { id: 'cv', label: 'CV', heading: 'CV and Transcript' },
     { id: 'contact', label: 'Contact', heading: 'Contact' },
   ],
 
@@ -112,12 +111,6 @@ export const content: Content = {
     cv: {
       label: 'CV',
       url: 'https://drive.google.com/file/d/1gv0ED_YfjYtYTrVU0mwTi01HcdCSOwvv/view',
-      lastUpdated: null, // TODO: Alif to provide, e.g. 'November 2026'
-    },
-    transcript: {
-      label: 'Transcript',
-      url: 'https://drive.google.com/file/d/1KTvQu5uPRasSIC5ZTtPULu_xyU0asy9p/view',
-      lastUpdated: null,
     },
   },
 }

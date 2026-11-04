@@ -87,11 +87,10 @@ Open `src/data/content.ts`. The file is plain text with comments. Save it, and `
 | `manuscriptsInPreparation` | Set to `true` only if it is true. It shows the line "Manuscripts in preparation." |
 | `projects` | A list of projects (see the example below). |
 | `projectsEmptyMessage` | The short line shown while `projects` is empty. |
-| `education` | `university`, `degree`, `batch`, and `cgpa`, shown in the CV and Transcript section. |
-| `documents.cv` | The CV button: `label`, `url` (a Google Drive link), and `lastUpdated`. |
-| `documents.transcript` | The Transcript button: `label` and `url`. Its `lastUpdated` is not shown. |
+| `education` | `university`, `degree`, `batch`, and `cgpa`. Only `university` is used on the site today (in the search-engine data). The degree and grade are not shown on the page. |
+| `documents.cv` | The CV button in the hero: `label` and `url` (a Google Drive link). There is no transcript on the site. |
 
-A few fixed labels are not in the data file. They live in the components: "Undergraduate thesis", "Supervised by", "Education", "Documents", "Publications", "RSS feed", "Back to Blog and Notes", "Skip to main content", "Post not found", and the button names for the menu and the theme switch.
+A few fixed labels are not in the data file. They live in the components: "Undergraduate thesis", "Supervised by", "Publications", "RSS feed", "Back to Blog and Notes", "Skip to main content", "Post not found", and the button names for the menu and the theme switch.
 
 ### Add a project
 
@@ -147,7 +146,6 @@ Describe the thesis as being "on" or "about" the topic, as it is today. Do not w
 
 ### Other common edits
 
-- **CV date:** set `documents.cv.lastUpdated` to text such as `'November 2026'`. It shows "Last updated November 2026" under the CV button. Keep it current, or leave it `null`.
 - **Contact sentence:** set `contact.intro` to a single sentence of your own.
 - **Reorder research interests:** move the entries inside `research`.
 - **Change a link:** replace the address. Keep the `https://` part.

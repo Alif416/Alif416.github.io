@@ -22,6 +22,7 @@ export default async function (ctx, { ok }) {
 
   // ---- Files exist and respond
   const html = await ctx.getText('')
+  ok('the page source does not mention a transcript', !/transcript/i.test(html))
   const must = ['feed.xml', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'favicon.svg', 'apple-touch-icon.png', 'social-card.png']
   const statuses = await Promise.all(must.map(async (f) => [f, await ctx.getStatus(f)]))
   ok('feed.xml, robots.txt, sitemap.xml, the three icons, and the social card are all served', statuses.every(([, s]) => s === 200), statuses.filter(([, s]) => s !== 200).map(([f, s]) => `${f} ${s}`).join(', '))
@@ -70,8 +71,8 @@ export default async function (ctx, { ok }) {
   const plainNoscript = plain(head.noscript.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'"))
   ok('the no-JavaScript fallback has the name, headline, and bio', [content.person.name, content.person.headline, content.person.bio].every((t) => plainNoscript.includes(plain(t))))
   const nsLinks = [...head.noscript.matchAll(/href="([^"]+)"/g)].map((m) => m[1].replace(/&amp;/g, '&'))
-  const wantLinks = [content.documents.cv.url, content.documents.transcript.url, ...profiles]
-  ok('the no-JavaScript fallback links to the CV, the transcript, and each profile', JSON.stringify(nsLinks) === JSON.stringify(wantLinks), `${nsLinks.length} links`)
+  const wantLinks = [content.documents.cv.url, ...profiles]
+  ok('the no-JavaScript fallback links to the CV and each profile', JSON.stringify(nsLinks) === JSON.stringify(wantLinks), `${nsLinks.length} links`)
   ok('the no-JavaScript fallback is a main landmark', /<main[\s>]/.test(head.noscript))
 
   // ---- The email address is not in anything a scraper downloads

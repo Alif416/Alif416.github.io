@@ -1,7 +1,6 @@
 import { Fragment, useLayoutEffect, useRef, type MouseEvent, type ReactNode } from 'react'
 import Blog from './components/Blog'
 import ContactSection from './components/ContactSection'
-import CvSection from './components/CvSection'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import PostPage from './components/PostPage'
@@ -24,7 +23,6 @@ const sections: Record<SectionId, ReactNode> = {
   thesis: <ThesisSection />,
   projects: <Projects />,
   blog: <Blog />,
-  cv: <CvSection />,
   contact: <ContactSection />,
 }
 

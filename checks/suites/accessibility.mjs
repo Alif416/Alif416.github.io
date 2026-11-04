@@ -116,7 +116,7 @@ export default async function (ctx, { ok, skip }) {
     await page.keyboard.press('Tab')
     const d = await page.evaluate(() => {
       const cs = (e) => getComputedStyle(e), q = (s) => document.querySelector(s)
-      return { forced: matchMedia('(forced-colors: active)').matches, ring: cs(document.activeElement).outlineStyle + ' ' + cs(document.activeElement).outlineWidth, borders: ['.hero .button--primary', '.hero .button--secondary', '.hero .icon-link', '.theme-toggle'].map((s) => cs(q(s)).borderTopStyle + ' ' + cs(q(s)).borderTopWidth) }
+      return { forced: matchMedia('(forced-colors: active)').matches, ring: cs(document.activeElement).outlineStyle + ' ' + cs(document.activeElement).outlineWidth, borders: ['.hero .button--primary', '.hero .icon-link', '.theme-toggle'].map((s) => cs(q(s)).borderTopStyle + ' ' + cs(q(s)).borderTopWidth) }
     })
     ok(`forced-colours mode (${scheme}): focus rings and the borders of buttons, icon links, and the toggle stay visible`, d.forced && /solid [2-9]/.test(d.ring) && d.borders.every((b) => /solid 1px/.test(b)), JSON.stringify(d))
     await context.close()
@@ -125,7 +125,7 @@ export default async function (ctx, { ok, skip }) {
   // ---- Contrast of hover, current, and focus states
   for (const scheme of ['light', 'dark']) {
     const { page, close } = await openPage(ctx.browser, base, { scheme })
-    const probes = [['menu link hover', '.site-nav__list a:nth-child(1)'], ['current menu link', '.site-nav__list a[aria-current="true"]'], ['primary button hover', '.hero .button--primary'], ['secondary button hover', '.hero .button--secondary'], ['site name hover', '.site-header__brand'], ['theme toggle hover', '.theme-toggle']]
+    const probes = [['menu link hover', '.site-nav__list a:nth-child(1)'], ['current menu link', '.site-nav__list a[aria-current="true"]'], ['primary button hover', '.hero .button--primary'], ['site name hover', '.site-header__brand'], ['theme toggle hover', '.theme-toggle']]
     const low = []
     for (const [name, sel] of probes) {
       const el = (await page.$(sel)) ?? (await page.$('.site-nav__list a'))

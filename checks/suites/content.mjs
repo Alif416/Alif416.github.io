@@ -19,7 +19,7 @@ export default async function (ctx, { ok }) {
   // ---- Hero
   ok('the name, headline, research statement, and bio come from the data', (await text('#about h1')) === c.person.name && (await text('.hero__headline')) === c.person.headline && (await text('.hero__statement')) === c.person.researchStatement && (await text('.hero__bio')) === c.person.bio)
   const buttons = await links('.hero__buttons a')
-  ok('the CV and Transcript buttons have the right labels and links, open in a new tab, and are 44px tall', JSON.stringify(buttons.map((b) => [b.label, b.href])) === JSON.stringify([[c.documents.cv.label, c.documents.cv.url], [c.documents.transcript.label, c.documents.transcript.url]]) && newTab(buttons) && buttons.every((b) => b.h >= 44))
+  ok('the CV button has the right label and link, opens in a new tab, and is 44px tall (there is no Transcript button)', JSON.stringify(buttons.map((b) => [b.label, b.href])) === JSON.stringify([[c.documents.cv.label, c.documents.cv.url]]) && newTab(buttons) && buttons.every((b) => b.h >= 44))
   const icons = await links('.profile-links a')
   const iconWant = [...(c.links.email ? [['Email']] : []), ...profile.map(([n, u]) => [n, u])]
   ok('the icon links are exactly the profiles that are set, and a missing one is hidden', JSON.stringify(icons.map((i) => i.label)) === JSON.stringify(iconWant.map((w) => w[0])), icons.map((i) => i.label).join(', '))
@@ -61,13 +61,8 @@ export default async function (ctx, { ok }) {
     ok('between three and five projects are shown (the target for this site)', c.projects.length >= 3 && c.projects.length <= 5, `${c.projects.length} projects`)
   }
 
-  // ---- CV, transcript, education
-  const edu = await page.evaluate(() => [...document.querySelectorAll('#cv .cv-block')[0].querySelectorAll('p')].map((p) => p.textContent.replace(/\s+/g, ' ').trim()))
-  ok('education reads university, degree, and "batch, CGPA" from the data', JSON.stringify(edu) === JSON.stringify([c.education.university, c.education.degree, `${c.education.batch} batch, CGPA ${c.education.cgpa}`]), edu.join(' | '))
-  const docs = await links('#cv .documents a')
-  ok('the CV and Transcript links in this section are the same as in the hero and open in a new tab', JSON.stringify(docs.map((d) => [d.label, d.href])) === JSON.stringify(buttons.map((b) => [b.label, b.href])) && newTab(docs))
-  const updated = await text('.documents__updated')
-  ok(c.documents.cv.lastUpdated ? 'the CV "Last updated" line is shown with the date from the data' : 'no CV date is in the data, so no "Last updated" line is shown', c.documents.cv.lastUpdated ? updated === `Last updated ${c.documents.cv.lastUpdated}` : updated === null)
+  // ---- The CV and Transcript section is gone, and so is the Transcript
+  ok('there is no CV section, no transcript, and no education block on the page', await page.evaluate(() => !document.getElementById('cv') && !/transcript/i.test(document.body.innerText) && !document.querySelector('.cv-block')))
 
   // ---- Contact
   ok(c.contact.intro ? 'the contact sentence is shown' : 'no contact sentence is in the data, so none is shown', c.contact.intro ? (await text('.contact__intro')) === c.contact.intro : (await text('.contact__intro')) === null)

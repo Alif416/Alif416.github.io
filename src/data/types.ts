@@ -7,7 +7,6 @@ export type SectionId =
   | 'thesis'
   | 'projects'
   | 'blog'
-  | 'cv'
   | 'contact'
 
 export interface Site {
@@ -114,13 +113,10 @@ export interface Document {
   // Button text
   label: string
   url: string
-  // e.g. "November 2026"; null until Alif provides it
-  lastUpdated: string | null
 }
 
 export interface Documents {
   cv: Document
-  transcript: Document
 }
 
 // Details of one blog post, read from the frontmatter of a Markdown file in content/blog.

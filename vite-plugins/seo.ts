@@ -47,7 +47,6 @@ export default function seo(content: SeoContent): Plugin {
   // Shown only when JavaScript is off. The email is left out on purpose.
   const noscriptLinks: [string, string][] = [
     [documents.cv.label, documents.cv.url],
-    [documents.transcript.label, documents.transcript.url],
     ...(links.github ? ([['GitHub', links.github]] as [string, string][]) : []),
     ...(links.linkedin ? ([['LinkedIn', links.linkedin]] as [string, string][]) : []),
     ...(links.scholar ? ([['Google Scholar', links.scholar]] as [string, string][]) : []),
