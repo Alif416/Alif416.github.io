@@ -1,0 +1,158 @@
+<!doctype html>
+<!--
+  Makes the photo files the site uses, from one picture.
+
+  How to use:
+    1. Open this file in Chrome (double-click it, or drag it into a Chrome window).
+    2. Choose your photo. A square-ish headshot with the face in the middle works best.
+    3. Download the five files below and put them in the public/ folder, replacing the old ones.
+    4. Redraw public/social-card.png (see design/social-card.html).
+
+  Nothing is uploaded anywhere. Everything happens in your browser.
+  Each file is cropped to a square from the middle of the picture.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Photo sizes</title>
+    <style>
+      body {
+        max-width: 42rem;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        font: 16px/1.6 system-ui, sans-serif;
+        color: #1a1d21;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      label {
+        font-weight: 600;
+      }
+      table {
+        width: 100%;
+        margin-top: 1.5rem;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 0.5rem;
+        border-bottom: 1px solid #e2e5ea;
+        text-align: left;
+        vertical-align: middle;
+      }
+      img {
+        display: block;
+        border-radius: 50%;
+        background: #f6f7f9;
+      }
+      .note {
+        color: #5b6470;
+        font-size: 0.9rem;
+      }
+      .error {
+        color: #b00020;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Photo sizes</h1>
+    <p>
+      <label for="file">Choose your photo</label><br />
+      <input id="file" type="file" accept="image/*" />
+    </p>
+    <p id="message" class="note" role="status">Pick a photo to make the five files.</p>
+    <table id="result" hidden>
+      <thead>
+        <tr>
+          <th>Preview</th>
+          <th>File</th>
+          <th>Size</th>
+          <th>Pixels</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <p class="note">
+      Put all five files in the <code>public/</code> folder of the project. The names must stay exactly as shown.
+    </p>
+
+    <script>
+      // The files the site expects: name, size in pixels, format, and quality.
+      const OUTPUTS = [
+        { name: 'photo.jpg', size: 420, type: 'image/jpeg', quality: 0.85 },
+        { name: 'photo-384.jpg', size: 384, type: 'image/jpeg', quality: 0.85 },
+        { name: 'photo-192.jpg', size: 192, type: 'image/jpeg', quality: 0.85 },
+        { name: 'photo-384.webp', size: 384, type: 'image/webp', quality: 0.8 },
+        { name: 'photo-192.webp', size: 192, type: 'image/webp', quality: 0.8 },
+      ]
+
+      const input = document.getElementById('file')
+      const message = document.getElementById('message')
+      const table = document.getElementById('result')
+      const body = table.querySelector('tbody')
+
+      const toBlob = (canvas, type, quality) =>
+        new Promise((resolve) => canvas.toBlob(resolve, type, quality))
+
+      input.addEventListener('change', async () => {
+        const file = input.files[0]
+        if (!file) return
+        body.replaceChildren()
+        table.hidden = true
+        message.className = 'note'
+        message.textContent = 'Working...'
+
+        try {
+          const bitmap = await createImageBitmap(file)
+          // Crop a square from the middle of the picture.
+          const side = Math.min(bitmap.width, bitmap.height)
+          const sx = (bitmap.width - side) / 2
+          const sy = (bitmap.height - side) / 2
+
+          for (const out of OUTPUTS) {
+            const canvas = document.createElement('canvas')
+            canvas.width = out.size
+            canvas.height = out.size
+            const ctx = canvas.getContext('2d')
+            // White behind the picture, so see-through areas do not turn black in a JPEG.
+            ctx.fillStyle = '#ffffff'
+            ctx.fillRect(0, 0, out.size, out.size)
+            ctx.imageSmoothingEnabled = true
+            ctx.imageSmoothingQuality = 'high'
+            ctx.drawImage(bitmap, sx, sy, side, side, 0, 0, out.size, out.size)
+
+            const blob = await toBlob(canvas, out.type, out.quality)
+            if (!blob || blob.type !== out.type) {
+              throw new Error(
+                'This browser cannot make ' + out.name + '. Open this page in Chrome.',
+              )
+            }
+            const url = URL.createObjectURL(blob)
+
+            const row = body.insertRow()
+            const preview = new Image(48, 48)
+            preview.src = url
+            preview.alt = ''
+            row.insertCell().appendChild(preview)
+            const link = document.createElement('a')
+            link.href = url
+            link.download = out.name
+            link.textContent = out.name
+            row.insertCell().appendChild(link)
+            row.insertCell().textContent = (blob.size / 1024).toFixed(1) + ' KB'
+            row.insertCell().textContent = out.size + ' x ' + out.size
+          }
+
+          table.hidden = false
+          message.textContent =
+            'Done. Click each file name to download it, then put the files in public/.'
+        } catch (error) {
+          message.className = 'error'
+          message.textContent = 'Something went wrong: ' + error.message
+        }
+      })
+    </script>
+  </body>
+</html>
