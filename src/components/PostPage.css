@@ -1,0 +1,187 @@
+.post {
+  padding-block: var(--space-5) var(--space-8);
+}
+
+.post__back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-bottom: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.post__back span {
+  margin-right: 0.4em;
+}
+
+.post__back:hover {
+  text-decoration: underline;
+}
+
+.post h1 {
+  max-width: var(--measure);
+  font-size: var(--text-2xl);
+  overflow-wrap: anywhere;
+}
+
+.post h1:focus {
+  outline: none;
+}
+
+.post__header {
+  margin-bottom: var(--space-5);
+}
+
+.post__meta {
+  margin-bottom: var(--space-2);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.post__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post__tags li {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.75;
+}
+
+/* ---------- Post body ---------- */
+
+.post__body {
+  max-width: var(--measure);
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+
+.post__body > :first-child {
+  margin-top: 0;
+}
+
+.post__body h2 {
+  margin: var(--space-6) 0 var(--space-3);
+  font-size: var(--text-xl);
+}
+
+.post__body h3 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--text-lg);
+}
+
+.post__body h4 {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--text-base);
+}
+
+.post__body p,
+.post__body ul,
+.post__body ol,
+.post__body blockquote,
+.post__body pre,
+.post__body .table-wrap {
+  margin: 0 0 var(--space-3);
+}
+
+.post__body ul,
+.post__body ol {
+  padding-left: var(--space-5);
+}
+
+.post__body li {
+  margin-bottom: var(--space-1);
+}
+
+.post__body blockquote {
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--accent);
+  color: var(--text-muted);
+}
+
+.post__body blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.post__body hr {
+  margin: var(--space-5) 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.post__body img {
+  height: auto;
+  border-radius: var(--radius);
+}
+
+/* ---------- Code ---------- */
+
+.post__body code {
+  padding: 0.1em 0.35em;
+  background: var(--surface);
+  border-radius: 0.25rem;
+}
+
+.post__body pre {
+  padding: var(--space-3);
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.post__body pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+/* Highlighted code: colors come from the build, one set per theme. */
+.post__body .shiki,
+.post__body .shiki span {
+  color: var(--shiki-light);
+}
+
+:root[data-theme='dark'] .post__body .shiki,
+:root[data-theme='dark'] .post__body .shiki span {
+  color: var(--shiki-dark);
+}
+
+/* ---------- Tables ---------- */
+
+.post__body .table-wrap {
+  overflow-x: auto;
+}
+
+.post__body table {
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+}
+
+.post__body th,
+.post__body td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.post__body th {
+  background: var(--surface);
+}

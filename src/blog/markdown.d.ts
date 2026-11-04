@@ -1,7 +1,7 @@
-// Types for the Markdown posts. They are turned into modules by vite-plugins/markdown.ts.
-declare module '*.md' {
+// The list of posts and a loader for each post's body. Both come from
+// vite-plugins/markdown.ts, which reads the Markdown files in content/blog at build time.
+declare module 'virtual:blog' {
   import type { Post } from '../data/types'
-  // null for a draft in a production build
-  export const meta: Post | null
-  export const html: string
+  export const posts: Post[]
+  export const loaders: Record<string, () => Promise<{ html: string }>>
 }

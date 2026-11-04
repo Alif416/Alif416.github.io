@@ -1,17 +1,9 @@
+import { readableDate } from '../blog/format'
 import { posts, postHref } from '../blog/posts'
 import { content } from '../data/content'
+import { rememberHomeScroll } from '../router'
 import Section from './Section'
 import './Blog.css'
-
-const dateFormat = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
-})
-
-// "2026-03-01" -> "1 March 2026"
-const readableDate = (date: string): string => dateFormat.format(new Date(`${date}T00:00:00Z`))
 
 export default function Blog() {
   const nav = content.nav.find((item) => item.id === 'blog')
@@ -30,7 +22,9 @@ export default function Blog() {
                 <span>{post.readingTime} min read</span>
               </p>
               <h3 className="blog-post__title">
-                <a href={postHref(post.slug)}>{post.title}</a>
+                <a href={postHref(post.slug)} onClick={rememberHomeScroll}>
+                  {post.title}
+                </a>
               </h3>
               <p className="blog-post__summary">{post.summary}</p>
               {post.tags.length > 0 && (

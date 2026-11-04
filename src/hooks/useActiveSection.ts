@@ -15,6 +15,8 @@ const SETTLE_MS = 1200
 // Expects an element with id="page-end" after the last section.
 export function useActiveSection(
   ids: string[],
+  // Turn off while the sections are not on the page (for example on a blog post page).
+  enabled: boolean,
 ): [string | null, (id: string) => void] {
   const [active, setActive] = useState<string | null>(null)
   const forced = useRef<string | null>(null)
@@ -27,6 +29,7 @@ export function useActiveSection(
   }, [])
 
   useEffect(() => {
+    if (!enabled) return
     const elements = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null)
@@ -109,7 +112,7 @@ export function useActiveSection(
       bottom?.disconnect()
       clearTimeout(hold.timer)
     }
-  }, [ids])
+  }, [ids, enabled])
 
-  return [active, activate]
+  return [enabled ? active : null, activate]
 }
