@@ -118,6 +118,8 @@ export interface Content {
   // Set to true only if Alif confirms he has manuscripts in preparation.
   manuscriptsInPreparation: boolean
   projects: Project[]
+  // Shown in the Projects section while the projects list is empty.
+  projectsEmptyMessage: string
   education: Education
   documents: Documents
 }

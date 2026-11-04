@@ -86,6 +86,7 @@ export const content: Content = {
 
   // TODO: Alif to provide the final 3 to 5 projects.
   projects: [],
+  projectsEmptyMessage: 'Projects are being added.',
 
   education: {
     university: 'BRAC University',
