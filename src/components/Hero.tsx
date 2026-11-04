@@ -1,28 +1,9 @@
 import { content } from '../data/content'
+import DocumentButton from './DocumentButton'
 import Photo from './Photo'
 import ProfileLinks from './ProfileLinks'
 import './Section.css'
 import './Hero.css'
-
-interface DocumentButtonProps {
-  url: string
-  label: string
-  variant: 'primary' | 'secondary'
-}
-
-function DocumentButton({ url, label, variant }: DocumentButtonProps) {
-  return (
-    <a
-      className={`button button--${variant}`}
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {label}
-      <span className="visually-hidden"> (opens in a new tab)</span>
-    </a>
-  )
-}
 
 // The About section. Owns the page's single h1 (the name).
 export default function Hero() {
