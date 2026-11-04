@@ -9,6 +9,8 @@
     3. Save it as public/social-card.png.
 
   The name and headline must match src/data/content.ts (person.name, person.headline).
+  The photo is public/photo.jpg. If there is no photo, delete the <img> line and the
+  padding-right change on .card to go back to the text-only card.
   The colors match the light theme in src/index.css.
 -->
 <html lang="en">
@@ -43,9 +45,21 @@
         justify-content: center;
         width: 1200px;
         height: 630px;
-        padding: 0 96px 0 120px;
+        padding: 0 420px 0 120px;
         background: #ffffff;
         overflow: hidden;
+      }
+
+      .photo {
+        position: absolute;
+        top: 50%;
+        right: 96px;
+        width: 288px;
+        height: 288px;
+        margin-top: -144px;
+        border: 2px solid #e2e5ea;
+        border-radius: 50%;
+        object-fit: cover;
       }
 
       .bar {
@@ -61,17 +75,16 @@
         margin: 0 0 28px;
         color: #1a1d21;
         font-family: 'Source Serif', Georgia, serif;
-        font-size: 88px;
+        font-size: 76px;
         font-weight: 600;
         line-height: 1.1;
       }
 
       .headline {
-        max-width: 960px;
         margin: 0;
         color: #5b6470;
         font-family: 'Inter', system-ui, sans-serif;
-        font-size: 36px;
+        font-size: 30px;
         line-height: 1.4;
       }
 
@@ -90,6 +103,7 @@
   <body>
     <div class="card">
       <div class="bar"></div>
+      <img class="photo" src="../public/photo.jpg" alt="" />
       <h1>Md Labibul Ahsan Alif</h1>
       <p class="headline">Computer Science graduate | Looking for PhD opportunities in AI security and machine learning</p>
       <p class="url">alif416.github.io</p>
