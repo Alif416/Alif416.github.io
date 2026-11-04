@@ -10,14 +10,14 @@ import Research from './components/Research'
 import ThesisSection from './components/ThesisSection'
 import { content } from './data/content'
 import type { SectionId } from './data/types'
+import { navItems, sectionIds } from './nav'
 import { useActiveSection } from './hooks/useActiveSection'
 import { getHomeScroll, jumpTo, parseRoute, useHash } from './router'
 
-const sectionIds = content.nav.map((item) => item.id)
 const year = new Date().getFullYear()
 
-// Every section. Sections are shown in the order of content.nav, so the
-// page order and the nav order always match.
+// Every section. Sections are shown in the order of content.nav (minus any that have
+// nothing to show yet, see src/nav.ts), so the page order and the nav order always match.
 const sections: Record<SectionId, ReactNode> = {
   about: <Hero />,
   research: <Research />,
@@ -65,7 +65,7 @@ function App() {
           <PostPage key={route.slug} slug={route.slug} />
         ) : (
           <>
-            {content.nav.map((item) => (
+            {navItems.map((item) => (
               <Fragment key={item.id}>{sections[item.id]}</Fragment>
             ))}
             <div id="page-end" aria-hidden="true" />

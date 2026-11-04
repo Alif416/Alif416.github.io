@@ -9,7 +9,7 @@ export const content: Content = {
     title: 'Md Labibul Ahsan Alif',
     pageTitle: 'Md Labibul Ahsan Alif | AI security and machine learning',
     description:
-      'Personal website of Md Labibul Ahsan Alif, a Computer Science graduate from BRAC University looking for PhD opportunities in AI security and machine learning.',
+      'Personal website of Md Labibul Ahsan Alif, a Computer Science graduate from BRAC University, looking for PhD opportunities in AI security and machine learning.',
     url: 'https://alif416.github.io/',
   },
 
@@ -18,7 +18,7 @@ export const content: Content = {
     shortName: 'Alif',
     location: 'Dhaka, Bangladesh',
     headline:
-      'Computer Science graduate | Looking for PhD opportunities in AI security and machine learning',
+      'Computer Science graduate, looking for PhD opportunities in AI security and machine learning',
     researchStatement:
       'I study how machine learning systems can be attacked and how to make them more trustworthy.',
     bio: "I'm Alif, a Computer Science graduate from BRAC University in Dhaka, Bangladesh. My research interests are AI security, adversarial machine learning, natural language processing, and federated learning. My undergraduate thesis, supervised by Mr. Moin Mostakim, looked at a remote patient monitoring system driven by federated learning. I'm now looking for PhD opportunities where I can keep working on trustworthy and secure machine learning.",
@@ -47,8 +47,6 @@ export const content: Content = {
     intro: null,
   },
 
-  blogEmptyMessage: 'Notes are being added.',
-
   nav: [
     { id: 'about', label: 'About', heading: 'Md Labibul Ahsan Alif' },
     { id: 'research', label: 'Research', heading: 'Research' },
@@ -75,7 +73,7 @@ export const content: Content = {
     {
       title: 'Natural language processing',
       description:
-        'Natural language processing is about getting computers to work with human language, from search and translation to chat assistants. I am interested in how these systems behave when the text they see is unusual or deliberately misleading.',
+        'Natural language processing is about getting computers to work with human language, from search and translation to chat assistants. Language models now sit inside many everyday tools, so it matters to understand how they can go wrong.',
     },
     {
       title: 'Federated learning',

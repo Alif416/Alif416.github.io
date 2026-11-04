@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { findPost, loadPostBody } from '../blog/posts'
 import { readableDate } from '../blog/format'
 import { content } from '../data/content'
+import { hasBlog } from '../nav'
 import './PostPage.css'
 
 type Loaded = { slug: string; html: string } | { slug: string; failed: true }
@@ -53,9 +54,9 @@ export default function PostPage({ slug }: { slug: string }) {
   }
 
   const back = (
-    <a className="post__back" href="#blog">
+    <a className="post__back" href={hasBlog ? '#blog' : '#about'}>
       <span aria-hidden="true">&larr; </span>
-      Back to Blog and Notes
+      {hasBlog ? 'Back to Blog and Notes' : 'Back to the home page'}
     </a>
   )
 

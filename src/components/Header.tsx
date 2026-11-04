@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { content } from '../data/content'
+import { navItems } from '../nav'
 import ThemeToggle from './ThemeToggle'
 import './Header.css'
 
@@ -11,7 +12,7 @@ interface HeaderProps {
 const MENU_ID = 'site-menu'
 
 export default function Header({ activeId, onNavigate }: HeaderProps) {
-  const { person, nav } = content
+  const { person } = content
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
@@ -92,7 +93,7 @@ export default function Header({ activeId, onNavigate }: HeaderProps) {
               id={MENU_ID}
               className={`site-nav__list${open ? ' is-open' : ''}`}
             >
-              {nav.map((item) => (
+              {navItems.map((item) => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}

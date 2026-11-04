@@ -147,8 +147,6 @@ export interface Content {
   person: Person
   links: Links
   contact: Contact
-  // Shown in the Blog section while there are no published posts.
-  blogEmptyMessage: string
   nav: NavItem[]
   research: ResearchInterest[]
   thesis: Thesis
