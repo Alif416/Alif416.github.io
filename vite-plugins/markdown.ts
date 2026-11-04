@@ -11,8 +11,11 @@
 //   import('/content/blog/<slug>.md?html')
 //     html    - the post body as HTML, with code already highlighted.
 //
+//   /feed.xml
+//     An RSS feed of the published posts, written at build time (and served in dev).
+//
 // A post with a problem fails the build with a message that names the file, so a
-// broken post can never reach the live site.
+// broken post can never reach the live site, and no feed is written either.
 //
 // Drafts (draft: true) are left out completely in a production build: they are not in
 // the list, not in the loaders, and their body is empty, so nothing of a draft can be
@@ -177,11 +180,97 @@ async function renderBody(body: string, name: string, fail: Fail): Promise<strin
   return cleanHtml(html, name, fail)
 }
 
-export default function markdownPosts(): Plugin {
+export interface SiteOptions {
+  title: string
+  description: string
+  // Full address of the site, for example https://alif416.github.io/
+  url: string
+}
+
+const FEED_PATH = 'feed.xml'
+
+// XML 1.0 allows tab, line feed, carriage return, and most other characters from space up
+// (but not other control characters, which some pasted text can contain).
+const isXmlChar = (code: number): boolean =>
+  code === 0x9 ||
+  code === 0xa ||
+  code === 0xd ||
+  (code >= 0x20 && code <= 0xd7ff) ||
+  (code >= 0xe000 && code <= 0xfffd) ||
+  (code >= 0x10000 && code <= 0x10ffff)
+
+// Text for XML: special characters escaped, and characters XML does not allow removed.
+const xml = (text: string): string =>
+  [...text]
+    .filter((char) => isXmlChar(char.codePointAt(0) ?? 0))
+    .join('')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+
+// "2026-03-01" -> "Sun, 01 Mar 2026 00:00:00 GMT" (RFC 822, as RSS expects)
+const rfc822 = (date: string): string => new Date(`${date}T00:00:00Z`).toUTCString()
+
+// An RSS 2.0 feed of the given posts, newest first. Summary only, no full post text.
+// Nothing here depends on the time of the build, so the same posts always give the same file.
+function buildFeed(posts: Meta[], site: SiteOptions): string {
+  const base = site.url.endsWith('/') ? site.url : `${site.url}/`
+  const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title))
+
+  const items = sorted.map((post) => {
+    const link = `${base}#/blog/${post.slug}`
+    return [
+      '    <item>',
+      `      <title>${xml(post.title)}</title>`,
+      `      <link>${xml(link)}</link>`,
+      `      <guid isPermaLink="true">${xml(link)}</guid>`,
+      `      <pubDate>${rfc822(post.date)}</pubDate>`,
+      `      <description>${xml(post.summary)}</description>`,
+      ...post.tags.map((tag) => `      <category>${xml(tag)}</category>`),
+      '    </item>',
+    ].join('\n')
+  })
+
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
+    '  <channel>',
+    `    <title>${xml(site.title)}</title>`,
+    `    <link>${xml(base)}</link>`,
+    `    <description>${xml(site.description)}</description>`,
+    '    <language>en</language>',
+    ...(sorted.length > 0 ? [`    <lastBuildDate>${rfc822(sorted[0].date)}</lastBuildDate>`] : []),
+    `    <atom:link href="${xml(`${base}${FEED_PATH}`)}" rel="self" type="application/rss+xml" />`,
+    ...items,
+    '  </channel>',
+    '</rss>',
+    '',
+  ].join('\n')
+}
+
+export default function markdownPosts(site: SiteOptions): Plugin {
   let root = process.cwd()
   let dropDrafts = false
 
   const postsDir = () => join(root, POSTS_DIR)
+
+  // Reads and checks every post in content/blog. A draft is checked too, but in a
+  // production build it is not kept. Used for both the post list and the feed.
+  const readPosts = (fail: Fail, watch?: (file: string) => void): { meta: Meta; file: string }[] => {
+    const dir = postsDir()
+    const files = existsSync(dir) ? readdirSync(dir).filter((file) => file.endsWith('.md')).sort() : []
+    const found: { meta: Meta; file: string }[] = []
+    for (const file of files) {
+      const full = join(dir, file)
+      watch?.(full)
+      const { meta } = parsePost(readFileSync(full, 'utf8'), full, fail)
+      if (meta.draft && dropDrafts) continue
+      found.push({ meta, file })
+    }
+    return found
+  }
 
   return {
     name: 'markdown-posts',
@@ -204,6 +293,36 @@ export default function markdownPosts(): Plugin {
       server.watcher.on('add', refresh)
       server.watcher.on('change', refresh)
       server.watcher.on('unlink', refresh)
+
+      // The feed, with drafts, so it can be previewed while writing.
+      server.middlewares.use(`/${FEED_PATH}`, (_request, response) => {
+        try {
+          const feed = buildFeed(readPosts((message) => { throw new Error(message) }).map((post) => post.meta), site)
+          response.setHeader('Content-Type', 'application/rss+xml; charset=utf-8')
+          response.end(feed)
+        } catch (error) {
+          response.statusCode = 500
+          response.end((error as Error).message)
+        }
+      })
+    },
+
+    // Adds the feed to the page head so browsers and feed readers can find it.
+    transformIndexHtml() {
+      return [
+        {
+          tag: 'link',
+          attrs: { rel: 'alternate', type: 'application/rss+xml', title: site.title, href: `/${FEED_PATH}` },
+          injectTo: 'head',
+        },
+      ]
+    },
+
+    // Writes feed.xml next to the site. If any post is broken the build has already
+    // failed before this point, so a partial feed is never written.
+    generateBundle() {
+      const posts = readPosts((message) => this.error(message)).map((post) => post.meta)
+      this.emitFile({ type: 'asset', fileName: FEED_PATH, source: buildFeed(posts, site) })
     },
 
     resolveId(id) {
@@ -213,20 +332,14 @@ export default function markdownPosts(): Plugin {
     load(id) {
       if (id !== RESOLVED_VIRTUAL_ID) return null
 
-      const dir = postsDir()
-      const files = existsSync(dir) ? readdirSync(dir).filter((file) => file.endsWith('.md')).sort() : []
-      const posts: Meta[] = []
-      const loaders: string[] = []
-
-      for (const file of files) {
-        const full = join(dir, file)
-        this.addWatchFile(full)
-        const { meta } = parsePost(readFileSync(full, 'utf8'), full, (message) => this.error(message))
-        // Every post is checked above, but a draft is not kept in a production build.
-        if (meta.draft && dropDrafts) continue
-        posts.push(meta)
-        loaders.push(`${JSON.stringify(meta.slug)}: () => import(${JSON.stringify(`/${POSTS_DIR}/${file}?html`)})`)
-      }
+      const found = readPosts(
+        (message) => this.error(message),
+        (file) => this.addWatchFile(file),
+      )
+      const posts = found.map((post) => post.meta)
+      const loaders = found.map(
+        ({ meta, file }) => `${JSON.stringify(meta.slug)}: () => import(${JSON.stringify(`/${POSTS_DIR}/${file}?html`)})`,
+      )
 
       return `export const posts = ${JSON.stringify(posts)};\nexport const loaders = {${loaders.join(',')}};\n`
     },

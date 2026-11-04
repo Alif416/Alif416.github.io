@@ -2,7 +2,7 @@
 // Missing values are `null` (the UI hides them) or empty arrays.
 // Do not use em-dashes or double dashes in any text.
 
-import type { Content } from './types'
+import type { Content } from './types.ts'
 
 export const content: Content = {
   site: {

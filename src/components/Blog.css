@@ -1,6 +1,10 @@
+.blog__feed {
+  margin: var(--space-4) 0 0;
+}
+
 .blog-list {
   display: grid;
-  margin: var(--space-5) 0 0;
+  margin: var(--space-3) 0 0;
   padding: 0;
   list-style: none;
   max-width: var(--measure);
