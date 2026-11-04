@@ -48,7 +48,10 @@ export interface Links {
 
 export interface NavItem {
   id: SectionId
+  // Short text in the nav bar
   label: string
+  // Heading shown at the top of the section
+  heading: string
 }
 
 export interface ResearchInterest {

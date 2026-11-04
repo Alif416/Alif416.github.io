@@ -35,13 +35,13 @@ export const content: Content = {
   },
 
   nav: [
-    { id: 'about', label: 'About' },
-    { id: 'research', label: 'Research' },
-    { id: 'thesis', label: 'Thesis' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'blog', label: 'Blog' },
-    { id: 'cv', label: 'CV' },
-    { id: 'contact', label: 'Contact' },
+    { id: 'about', label: 'About', heading: 'Md Labibul Ahsan Alif' },
+    { id: 'research', label: 'Research', heading: 'Research' },
+    { id: 'thesis', label: 'Thesis', heading: 'Thesis and Publications' },
+    { id: 'projects', label: 'Projects', heading: 'Projects' },
+    { id: 'blog', label: 'Blog', heading: 'Blog and Notes' },
+    { id: 'cv', label: 'CV', heading: 'CV and Transcript' },
+    { id: 'contact', label: 'Contact', heading: 'Contact' },
   ],
 
   // TODO: Alif to review. These are general explanations of each field and

@@ -1,0 +1,22 @@
+.section {
+  padding-block: var(--space-7);
+  scroll-margin-top: var(--header-height);
+}
+
+.section + .section {
+  border-top: 1px solid var(--border);
+}
+
+@media (min-width: 48rem) {
+  .section {
+    padding-block: var(--space-8);
+  }
+}
+
+/* Temporary lines that mark where real content goes. Remove as each section is built. */
+.placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-style: italic;
+}

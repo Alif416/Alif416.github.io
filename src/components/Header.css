@@ -1,0 +1,147 @@
+/* Zero-height marker at the top of the page, used to detect scrolling. */
+.header-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition);
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: var(--border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  height: var(--header-height);
+}
+
+.site-header__brand {
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header__brand:hover {
+  color: var(--accent);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ---------- Nav links ---------- */
+
+.site-nav__list {
+  display: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav__list a {
+  display: block;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition:
+    color var(--transition),
+    border-color var(--transition);
+}
+
+.site-nav__list a:hover {
+  color: var(--text);
+}
+
+.site-nav__list a[aria-current='true'] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---------- Mobile menu ---------- */
+
+.menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.menu-button:hover {
+  background: var(--surface);
+  border-color: var(--text);
+}
+
+.site-nav__list.is-open {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: var(--space-2) var(--gutter) var(--space-3);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-nav__list.is-open a {
+  padding: var(--space-3) 0;
+  font-size: var(--text-base);
+}
+
+/* ---------- Desktop ---------- */
+
+@media (min-width: 48rem) {
+  .menu-button {
+    display: none;
+  }
+
+  .site-nav {
+    margin-left: auto;
+  }
+
+  .site-nav__list,
+  .site-nav__list.is-open {
+    display: flex;
+    position: static;
+    gap: var(--space-4);
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+
+  .site-nav__list a,
+  .site-nav__list.is-open a {
+    padding: var(--space-1) 0;
+    font-size: var(--text-sm);
+  }
+}
