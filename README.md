@@ -82,7 +82,7 @@ Open `src/data/content.ts`. The file is plain text with comments. Save it, and `
 | `contact.intro` | An optional sentence above your email in the Contact section. `null` shows nothing. |
 | `nav` | The section order, the menu label, and the heading of each section. You can change `label` and `heading`. Do not change `id`, because the code depends on those names. |
 | `research` | The research interests, as a list of short names. They show as tags, in this order. |
-| `thesis` | Shown inside the Research section, under the interests. `title`, `supervisor`, `year`, and the optional `abstract`, `pdfUrl`, and `codeUrl`. Each `null` is hidden. |
+| `thesis` | Shown on the left of the Research section, next to the interests box. `title`, `supervisor`, `year`, the optional `abstract`, `pdfUrl`, and `codeUrl` (each `null` is hidden), and `milestones`, a list of steps with a `label` and an optional `date`, shown as a small timeline. An empty list hides it. |
 | `projects` | A list of projects (see the example below). |
 | `projectsEmptyMessage` | The short line shown while `projects` is empty. |
 | `education` | `university`, `degree`, `batch`, and `cgpa`. Only `university` is used on the site today (in the search-engine data). The degree and grade are not shown on the page. |

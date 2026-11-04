@@ -4,7 +4,7 @@ import Section from './Section'
 import Thesis from './Thesis'
 import './Research.css'
 
-// The Research section: the interests as a short list, then the thesis.
+// The Research section: the thesis on the left, and the interests in a box on the right.
 export default function Research() {
   const nav = content.nav.find((item) => item.id === 'research')
   const interests = content.research
@@ -12,16 +12,21 @@ export default function Research() {
 
   return (
     <Section id="research" heading={nav?.heading ?? 'Research'}>
-      {interests.length > 0 && (
-        <ul ref={ref} className={`research-list${visible ? ' is-visible' : ''}`} aria-label="Research interests">
-          {interests.map((interest, index) => (
-            <li key={interest} className="research-list__item" style={{ '--i': index } as React.CSSProperties}>
-              {interest}
-            </li>
-          ))}
-        </ul>
-      )}
-      <Thesis />
+      <div className="research-layout">
+        <Thesis />
+        {interests.length > 0 && (
+          <div className="research-box">
+            <h3 className="research-box__title">Research interests</h3>
+            <ul ref={ref} className={`research-list${visible ? ' is-visible' : ''}`}>
+              {interests.map((interest, index) => (
+                <li key={interest} className="research-list__item" style={{ '--i': index } as React.CSSProperties}>
+                  {interest}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </Section>
   )
 }

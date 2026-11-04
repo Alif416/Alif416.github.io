@@ -1,10 +1,39 @@
+/* The thesis and the interests box side by side on wide screens, stacked on phones. */
+.research-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.research-box {
+  min-width: 0;
+  padding: min(var(--space-4), 8vw);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.research-box__title {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-lg);
+}
+
+@media (min-width: 48rem) {
+  .research-layout {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+}
+
 /* The interests as a row of tags. They fade in one after another, once, as the list scrolls
    into view (skipped for reduced motion). */
 .research-list {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin: var(--space-5) 0 var(--space-6);
+  margin: 0;
   padding: 0;
   list-style: none;
 }

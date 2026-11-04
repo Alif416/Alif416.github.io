@@ -64,6 +64,11 @@ export const content: Content = {
     abstract: null, // TODO: Alif to provide
     pdfUrl: null, // TODO: Alif to provide
     codeUrl: null, // TODO: Alif to provide
+    // Only facts already on the site. Alif to replace with the real steps and dates.
+    milestones: [
+      { label: 'Began the thesis under Mr. Moin Mostakim', date: null },
+      { label: 'Thesis on federated learning for remote patient monitoring', date: '2026' },
+    ],
   },
 
   projects: [

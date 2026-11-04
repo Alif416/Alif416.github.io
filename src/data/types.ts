@@ -75,6 +75,13 @@ export interface Thesis {
   abstract: string | null
   pdfUrl: string | null
   codeUrl: string | null
+  /** Steps shown as a small timeline under the thesis. Empty hides it. */
+  milestones: Milestone[]
+}
+
+export interface Milestone {
+  label: string
+  date: string | null
 }
 
 export interface Project {

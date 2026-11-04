@@ -44,6 +44,10 @@ export default async function (ctx, { ok, skip }) {
   const thesisLinks = await links('.thesis__links a')
   const thesisWant = [t.pdfUrl && ['PDF', t.pdfUrl], t.codeUrl && ['Code', t.codeUrl]].filter(Boolean)
   ok('the thesis PDF and code links are shown only if set, open in a new tab, and are 44px tall', JSON.stringify(thesisLinks.map((l) => [l.label, l.href])) === JSON.stringify(thesisWant) && newTab(thesisLinks) && thesisLinks.every((l) => l.h >= 44), `${thesisLinks.length} links`)
+  const ms = await page.evaluate(() => [...document.querySelectorAll('.milestones li')].map((li) => li.textContent))
+  ok('the thesis milestones are shown in the order of the data, and hidden when there are none', JSON.stringify(ms) === JSON.stringify(t.milestones.map((m) => (m.date ?? '') + m.label)), ms.join(' | '))
+  const lay = await page.evaluate(() => { const r = (s) => { const b = document.querySelector(s)?.getBoundingClientRect(); return b && { left: b.left, right: b.right } }; return { thesis: r('#research .thesis'), box: r('.research-box'), inner: innerWidth } })
+  ok('on a wide screen the thesis is on the left and the interests box is on the right', lay.inner < 768 || (lay.thesis.right <= lay.box.left + 1), JSON.stringify(lay))
   ok('the thesis sits inside the Research section, and there is no separate Thesis or Publications section', await page.evaluate(() => !!document.querySelector('#research .thesis') && !document.getElementById('thesis') && !document.querySelector('.publications')))
 
   // ---- Projects
