@@ -107,6 +107,20 @@ export interface Documents {
   transcript: Document
 }
 
+// Details of one blog post, read from the frontmatter of a Markdown file in content/blog.
+export interface Post {
+  // From the filename, for example "my-first-note"
+  slug: string
+  title: string
+  // YYYY-MM-DD
+  date: string
+  tags: string[]
+  summary: string
+  // Minutes
+  readingTime: number
+  draft: boolean
+}
+
 export interface Contact {
   // One sentence shown above the email. null means no intro is shown.
   intro: string | null
@@ -117,6 +131,8 @@ export interface Content {
   person: Person
   links: Links
   contact: Contact
+  // Shown in the Blog section while there are no published posts.
+  blogEmptyMessage: string
   nav: NavItem[]
   research: ResearchInterest[]
   thesis: Thesis

@@ -40,6 +40,8 @@ export const content: Content = {
     intro: null,
   },
 
+  blogEmptyMessage: 'Notes are being added.',
+
   nav: [
     { id: 'about', label: 'About', heading: 'Md Labibul Ahsan Alif' },
     { id: 'research', label: 'Research', heading: 'Research' },
