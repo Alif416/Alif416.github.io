@@ -11,19 +11,25 @@ export default function ProjectCard({ project }: { project: Project }) {
 
   return (
     <article className="project-card" aria-labelledby={titleId}>
-      <h3 id={titleId}>{title}</h3>
-      <p className="project-card__summary">{summary}</p>
-      {tech.length > 0 && (
-        <ul className="project-card__tech" aria-label="Technologies used">
-          {tech.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      )}
-      {hasLinks && (
-        <div className="project-card__links">
-          {githubUrl && <ExternalChip href={githubUrl} label="GitHub" />}
-          {demoUrl && <ExternalChip href={demoUrl} label="Demo" />}
+      <div className="project-card__main">
+        <h3 id={titleId}>{title}</h3>
+        <p className="project-card__summary">{summary}</p>
+      </div>
+      {(tech.length > 0 || hasLinks) && (
+        <div className="project-card__side">
+          {tech.length > 0 && (
+            <ul className="project-card__tech" aria-label="Technologies used">
+              {tech.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          )}
+          {hasLinks && (
+            <div className="project-card__links">
+              {githubUrl && <ExternalChip href={githubUrl} label="GitHub" />}
+              {demoUrl && <ExternalChip href={demoUrl} label="Demo" />}
+            </div>
+          )}
         </div>
       )}
     </article>

@@ -58,6 +58,8 @@ export default async function (ctx, { ok, skip }) {
   } else {
     ok('each project is a card, in the order of the data, with its summary and tech tags', JSON.stringify(projects.cards.map((p) => [p.title, p.summary, p.tech])) === JSON.stringify(c.projects.map((p) => [p.title, p.summary, p.tech])) && projects.message === null)
     ok('each project shows a GitHub or Demo link only if the data has one', projects.cards.every((card, i) => JSON.stringify(card.links) === JSON.stringify([c.projects[i].githubUrl && ['GitHub', c.projects[i].githubUrl], c.projects[i].demoUrl && ['Demo', c.projects[i].demoUrl]].filter(Boolean))))
+    const shape = await page.evaluate(() => { const g = (s) => [...document.querySelectorAll(s)].map((a) => { const r = a.getBoundingClientRect(); return { left: r.left, right: r.right, width: r.width, height: r.height } }); return { cards: g('#projects article'), main: g('.project-card__main'), side: g('.project-card__side'), inner: innerWidth } })
+    ok('on a wide screen each project card is a wide landscape card, text on the left and tech and links on the right', shape.inner < 768 || shape.cards.every((r, i) => r.width > r.height * 1.5 && shape.side[i].left >= shape.main[i].right - 1), JSON.stringify(shape.cards.map((r) => [Math.round(r.width), Math.round(r.height)])))
     if (c.projects.length < 3) skip(`the target is three to five projects`, `${c.projects.length} so far`)
     else ok('no more than five projects are shown (the target for this site is three to five)', c.projects.length <= 5, `${c.projects.length} projects`)
   }

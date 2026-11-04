@@ -1,6 +1,9 @@
 .project-card {
-  display: flex;
-  flex-direction: column;
+  /* Phones: one column (text, then tech and links). Wider screens: a wide card with the
+     text on the left and the tech and links on the right. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
   height: 100%;
   /* The cap only matters with very large text, when padding in rem would fill a small screen. */
   padding: min(var(--space-4), 8vw);
@@ -8,6 +11,26 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   transition: border-color var(--transition);
+}
+
+.project-card__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+@media (min-width: 48rem) {
+  .project-card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 15rem);
+    gap: var(--space-5);
+    padding: var(--space-5);
+  }
+
+  /* Tech tags at the top of the right column, links at the bottom. */
+  .project-card__side {
+    justify-content: space-between;
+  }
 }
 
 .project-card:hover {
