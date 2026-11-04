@@ -1,8 +1,79 @@
-.project-grid {
+/* A vertical roadmap: a line down the left, a dot and a date for each project, and each
+   card fades in once as it scrolls into view. */
+.timeline {
+  /* Space for the line and dots. Capped so very large text on a small screen keeps room for the card. */
+  --timeline-gap: min(var(--space-4), 6vw);
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
+  gap: var(--space-5);
   margin: var(--space-5) 0 0;
-  padding: 0;
+  padding: 0 0 0 var(--timeline-gap);
   list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.3125rem;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline__item {
+  position: relative;
+  min-width: 0;
+}
+
+.timeline__item::before {
+  content: '';
+  position: absolute;
+  top: 0.35rem;
+  left: calc(-1 * var(--timeline-gap));
+  width: 0.75rem;
+  height: 0.75rem;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  transition: background-color var(--transition);
+}
+
+.timeline__item.is-visible::before {
+  background: var(--accent);
+}
+
+.timeline__date {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+@media (min-width: 48rem) {
+  .timeline {
+    --timeline-gap: var(--space-5);
+  }
+
+  .timeline::before {
+    left: 0.4375rem;
+  }
+
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .timeline__item {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+
+  .timeline__item.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 }

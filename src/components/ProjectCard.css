@@ -58,6 +58,8 @@
 }
 
 .project-card__tech li {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   padding: 0 var(--space-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);

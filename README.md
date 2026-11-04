@@ -100,6 +100,7 @@ Add an entry inside `projects`. Write only what is true.
 projects: [
   {
     title: 'Example project',
+    date: 'May 2026', // shown on the timeline, or null to hide it
     summary: 'One paragraph: the problem it solves and an honest result.',
     tech: ['Python', 'PyTorch'],
     githubUrl: 'https://github.com/your-name/example',
@@ -108,7 +109,7 @@ projects: [
 ],
 ```
 
-Put the projects closest to your research first. Three to five is a good number. The page shows them in the order you write them.
+Put the projects closest to your research first. Three to five is a good number. The page shows them as a timeline, in the order you write them, so put the date you want each one to carry in `date`.
 
 ### Add a publication
 

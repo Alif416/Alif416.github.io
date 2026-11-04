@@ -96,6 +96,8 @@ export interface Publication {
 
 export interface Project {
   title: string
+  /** When the project was done, shown on the timeline, e.g. 'May 2026'. null hides it. */
+  date: string | null
   summary: string
   tech: string[]
   githubUrl: string | null
