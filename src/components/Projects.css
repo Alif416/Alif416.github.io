@@ -1,13 +1,18 @@
-/* A vertical roadmap: a line down the left, a dot and a date for each project, and each
-   card fades in once as it scrolls into view. */
+/* A vertical roadmap: a line down the left with one dot that glides along it as you
+   scroll, highlighting the project it reaches. Each card also fades in once on scroll. */
 .timeline {
   /* Space for the line and dots. Capped so very large text on a small screen keeps room for the card. */
   --timeline-gap: min(var(--space-4), 6vw);
   position: relative;
-  display: grid;
-  gap: var(--space-5);
   margin: var(--space-5) 0 0;
   padding: 0 0 0 var(--timeline-gap);
+}
+
+.timeline__list {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
@@ -26,22 +31,27 @@
   min-width: 0;
 }
 
-.timeline__item::before {
-  content: '';
+/* The one dot. Its position is set from the scroll position in Projects.tsx. */
+.timeline__dot {
   position: absolute;
-  top: 0.35rem;
-  left: calc(-1 * var(--timeline-gap));
+  top: 0;
+  left: 0;
   width: 0.75rem;
   height: 0.75rem;
   box-sizing: border-box;
-  background: var(--bg);
-  border: 2px solid var(--accent);
+  background: var(--accent);
+  border: 2px solid var(--bg);
   border-radius: 50%;
-  transition: background-color var(--transition);
+  box-shadow: 0 0 0 2px var(--accent);
+  will-change: transform;
 }
 
-.timeline__item.is-visible::before {
-  background: var(--accent);
+.timeline__item.is-active .timeline__date {
+  color: var(--accent);
+}
+
+.timeline__item.is-active .project-card {
+  border-color: var(--accent);
 }
 
 .timeline__date {
@@ -55,10 +65,6 @@
 @media (min-width: 48rem) {
   .timeline {
     --timeline-gap: var(--space-5);
-  }
-
-  .timeline::before {
-    left: 0.4375rem;
   }
 
 }

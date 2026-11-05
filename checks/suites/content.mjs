@@ -52,6 +52,28 @@ export default async function (ctx, { ok, skip }) {
   } else {
     ok('each project is a card, in the order of the data, with its summary and tech tags', JSON.stringify(projects.cards.map((p) => [p.title, p.summary, p.tech])) === JSON.stringify(c.projects.map((p) => [p.title, p.summary, p.tech])) && projects.message === null)
     ok('each project shows a GitHub or Demo link only if the data has one', projects.cards.every((card, i) => JSON.stringify(card.links) === JSON.stringify([c.projects[i].githubUrl && ['GitHub', c.projects[i].githubUrl], c.projects[i].demoUrl && ['Demo', c.projects[i].demoUrl]].filter(Boolean))))
+    // One dot glides down the line while scrolling, and the project it reaches is highlighted.
+    const dots = await page.evaluate(() => document.querySelectorAll('.timeline__dot').length)
+    ok('the projects timeline has exactly one dot', dots === 1, `${dots} dots`)
+    if (c.projects.length > 1) {
+      const results = []
+      for (let i = 0; i < c.projects.length; i++) {
+        await page.evaluate((i) => {
+          const li = document.querySelectorAll('.timeline__item')[i]
+          const anchor = li.getBoundingClientRect().top + li.firstElementChild.getBoundingClientRect().height / 2
+          window.scrollBy({ top: anchor - innerHeight * 0.45, behavior: 'instant' })
+        }, i)
+        await new Promise((r) => setTimeout(r, 250))
+        results.push(await page.evaluate((i) => {
+          const items = [...document.querySelectorAll('.timeline__item')]
+          const dot = document.querySelector('.timeline__dot').getBoundingClientRect()
+          const li = items[i], first = li.firstElementChild.getBoundingClientRect()
+          return { active: items.map((x, n) => x.classList.contains('is-active') ? n : -1).filter((n) => n >= 0), gap: Math.round(Math.abs(dot.top + dot.height / 2 - (first.top + first.height / 2))) }
+        }, i))
+      }
+      ok('scrolling to each project moves the one dot beside it and highlights only that project', results.every((r, i) => r.active.length === 1 && r.active[0] === i && r.gap <= 24), JSON.stringify(results))
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+    }
     const shape = await page.evaluate(() => { const g = (s) => [...document.querySelectorAll(s)].map((a) => { const r = a.getBoundingClientRect(); return { left: r.left, right: r.right, width: r.width, height: r.height } }); return { cards: g('#projects article'), main: g('.project-card__main'), side: g('.project-card__side'), inner: innerWidth } })
     ok('on a wide screen each project card is a wide landscape card, text on the left and tech and links on the right', shape.inner < 768 || shape.cards.every((r, i) => r.width > r.height * 1.5 && shape.side[i].left >= shape.main[i].right - 1), JSON.stringify(shape.cards.map((r) => [Math.round(r.width), Math.round(r.height)])))
     if (c.projects.length < 3) skip(`the target is three to five projects`, `${c.projects.length} so far`)
