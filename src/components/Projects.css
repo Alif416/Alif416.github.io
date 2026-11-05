@@ -83,3 +83,24 @@
     transform: none;
   }
 }
+
+/* Only the project the dot has reached is lifted toward the reader, with a small tilt and a
+   deeper shadow. The others stay flat. Skipped for reduced motion, which keeps just the accent
+   border and date colour above. */
+@media (prefers-reduced-motion: no-preference) {
+  .timeline__item {
+    perspective: 900px;
+  }
+
+  .timeline__item .project-card {
+    transition:
+      border-color var(--transition),
+      transform 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+
+  .timeline__item.is-active .project-card {
+    transform: translateZ(20px) rotateX(2deg) rotateY(-2deg);
+    box-shadow: 0 14px 28px rgb(0 0 0 / 0.18);
+  }
+}
