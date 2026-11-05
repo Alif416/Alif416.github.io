@@ -1,4 +1,4 @@
-/* Phones: photo first, then text. Desktop: text on the left, photo on the right. */
+/* Phones: photo first, then text. Desktop: a large photo on the left, the text beside it. */
 
 .section.hero {
   padding-top: var(--space-5);
@@ -65,13 +65,9 @@
   }
 
   .hero__inner {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
-    gap: var(--space-6);
-  }
-
-  .hero__photo {
-    order: 0;
+    gap: var(--space-7);
   }
 
   .hero__headline {

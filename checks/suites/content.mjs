@@ -29,7 +29,7 @@ export default async function (ctx, { ok, skip }) {
     ok('the email icon gets its mailto: address in the browser', email?.href === `mailto:${c.links.email.user}@${c.links.email.domain}`)
   } else ok('no email is set, so no email icon is shown', !icons.some((i) => i.label === 'Email'))
   const photo = await page.evaluate(() => { const p = document.querySelector('.photo'); return p ? { tag: p.tagName, alt: p.alt, loaded: p.complete && p.naturalWidth > 0, w: Math.round(p.getBoundingClientRect().width) } : null })
-  if (c.person.photo) ok('the photo is shown with the alt text from the data, and loaded', photo?.tag === 'IMG' && photo.alt === c.person.photo.alt && photo.loaded && photo.w === 192, JSON.stringify(photo))
+  if (c.person.photo) ok('the photo is shown with the alt text from the data, and loaded', photo?.tag === 'IMG' && photo.alt === c.person.photo.alt && photo.loaded && photo.w === 288, JSON.stringify(photo))
   else ok('no photo is set, so a letter in a circle is shown', photo?.tag === 'DIV')
 
   // ---- Research

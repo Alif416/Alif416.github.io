@@ -12,11 +12,11 @@ export default function Photo() {
         className="photo"
         src={photo.src}
         srcSet={photo.srcSet}
-        // The photo is 192 pixels wide from tablet width up, and 112 pixels on phones.
-        sizes={photo.srcSet ? '(min-width: 768px) 192px, 112px' : undefined}
+        // The photo is 288 pixels wide from tablet width up, and 144 pixels on phones.
+        sizes={photo.srcSet ? '(min-width: 768px) 288px, 144px' : undefined}
         alt={photo.alt}
-        width={192}
-        height={192}
+        width={288}
+        height={288}
         // Above the fold, so load it right away.
         fetchPriority="high"
       />
@@ -31,7 +31,7 @@ export default function Photo() {
             key={source.type}
             type={source.type}
             srcSet={source.srcSet}
-            sizes="(min-width: 768px) 192px, 112px"
+            sizes="(min-width: 768px) 288px, 144px"
           />
         ))}
         {image}

@@ -3,7 +3,7 @@
 }
 
 .photo {
-  --photo-size: 7rem;
+  --photo-size: 9rem;
   display: block;
   width: var(--photo-size);
   height: var(--photo-size);
@@ -26,6 +26,6 @@
 
 @media (min-width: 48rem) {
   .photo {
-    --photo-size: 12rem;
+    --photo-size: 18rem;
   }
 }
